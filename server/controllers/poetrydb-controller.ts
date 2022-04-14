@@ -13,7 +13,13 @@ const searchForPoems = async (req, res) => {
   res.send(data);
 };
 
+const findRandomPoems = async (req, res) => {
+  const data = await poetrydb.randomPoems(req.params.number);
+  res.send(data);
+};
+
 export default (app) => {
   app.get('/api/authors', getAuthors);
   app.get('/api/poems', searchForPoems);
+  app.get('/api/poems/random/:number', findRandomPoems);
 };

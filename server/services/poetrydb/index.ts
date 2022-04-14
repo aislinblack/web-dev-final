@@ -13,9 +13,28 @@ const findPoems = (args: { title?: string; author?: string }) => {
     args.title ? `/title/${encodeURIComponent(args.title)}` : ''
   }${args.author ? `/author/${encodeURIComponent(args.author)}` : ''}`;
 
-  return axios.get(url).then((response) => {
-    return response.data;
-  });
+  console.log(url);
+
+  return axios
+    .get(url)
+    .then((response) => {
+      if (response.data.status === 404) {
+        return [];
+      }
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
 };
 
-export default { findAuthors, findPoems };
+const randomPoems = (numberOfPoems: number) => {
+  return axios
+    .get(`${poetryApiHost}/random/${numberOfPoems}`)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export default { findAuthors, findPoems, randomPoems };
