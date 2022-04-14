@@ -7,8 +7,9 @@ const getAuthors = async (req, res) => {
 };
 
 const searchForPoems = async (req, res) => {
-  const title: string = req.query.title || '';
-  const data = await poetrydb.findPoems({ title });
+  const title: string | undefined = req.query.title;
+  const author: string | undefined = req.query.author;
+  const data = await poetrydb.findPoems({ title, author });
   res.send(data);
 };
 
