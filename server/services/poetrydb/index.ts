@@ -10,4 +10,13 @@ const findAuthors = () => {
   });
 };
 
-export default { findAuthors, searchPoetryDb };
+const findPoems = (args: { title?: string }) => {
+  return axios
+    .get(`${poetryApiHost}/title/${encodeURIComponent(args.title)}`)
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    });
+};
+
+export default { findAuthors, findPoems };
