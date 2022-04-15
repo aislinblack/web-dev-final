@@ -1,39 +1,39 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { map } from '../../vendors/fontawesome/js/v4-shims';
+import { findPoem } from '../../services/poetry-service';
 
-const poemExample = {
-  title: "April Is a Dog's Dream",
-  author: 'Marilyn Singer',
-  lines: [
-    "april is a dog's dream",
-    'the soft grass is growing',
-    'the sweet breeze is blowing',
-    'the air all full of singing feels just right',
-    'so no excuses now',
-    "we're going to the park",
-    'to chase and charge and chew',
-    'and I will make you see',
-    'what spring is all about',
-  ],
-  likes: 4,
-  rating: 2,
+type PoemType = {
+  lines: string[];
+  author: string;
+  title: string;
+  likes: number;
+  rating: number;
 };
 
 const Poem = () => {
+  const [poem, setPoem] = useState<null | PoemType>(null);
   const params = useParams();
-  const author = params.author;
-  const title = params.title;
+  const author = params.author!;
+  const title = params.title!;
+
+  useEffect(() => {
+    findPoem(title, author).then((res) => {
+      setPoem(res);
+    });
+  }, [title, author]);
 
   return (
     <div>
       <h1>{title}</h1>
       <h4>{author}</h4>
-      {poemExample.lines.map((line) => (
+      {poem?.lines?.map((line) => (
         <div>{line}</div>
       ))}
-      <div className='mt-5'>
-        Likes: {poemExample.likes} Rating: {poemExample.rating}
-      </div>
+      {poem && (
+        <div className='mt-5'>
+          Likes: {poem.likes} Rating: {poem.rating}
+        </div>
+      )}
     </div>
   );
 };

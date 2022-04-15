@@ -12,7 +12,18 @@ export const findPoems = (title: string, author: string) => {
   });
 };
 
-export const findPoem = (title: string, author: string) => {};
+export const findPoem = (title: string, author: string) => {
+  return axios
+    .get(
+      `${POETRY_API}/author/${encodeURIComponent(
+        author
+      )}/title/${encodeURIComponent(title)}`
+    )
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    });
+};
 
 export const findRandomPoems = () => {
   return axios.get(`${POETRY_API}/random/5`).then((res) => {
