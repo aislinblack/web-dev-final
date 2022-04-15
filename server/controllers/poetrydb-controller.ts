@@ -18,8 +18,21 @@ const findRandomPoems = async (req, res) => {
   res.send(data);
 };
 
+const findPoem = async (req, res) => {
+  const poems = await poetrydb.findPoems({ title: req.params.title });
+  console.log(poems);
+  const maybePoem = poems.find((poem) => poem.author === req.params.author);
+
+  if (!maybePoem) {
+    throw new Error('No Such Poem');
+  }
+
+  res.send(maybePoem);
+};
+
 export default (app) => {
   app.get('/api/authors', getAuthors);
   app.get('/api/poems', searchForPoems);
   app.get('/api/poems/random/:number', findRandomPoems);
+  app.get('/api/poems/author/:author/title/:title', findPoem);
 };

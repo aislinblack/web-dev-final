@@ -33,7 +33,10 @@ const randomPoems = (numberOfPoems: number) => {
   return axios
     .get(`${poetryApiHost}/random/${numberOfPoems}`)
     .then((response) => {
-      return response.data;
+      return response.data.map((item) => {
+        //TODO: use own database to have actual data
+        return { ...item, likes: 0, rating: 0 };
+      });
     });
 };
 

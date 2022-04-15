@@ -11,3 +11,11 @@ export const findPoems = (title: string, author: string) => {
     },
   });
 };
+
+export const findPoem = (title: string, author: string) => {};
+
+export const findRandomPoems = () => {
+  return axios.get(`${POETRY_API}/random/5`).then((res) => {
+    return res.data;
+  });
+};
