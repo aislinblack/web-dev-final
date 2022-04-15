@@ -2,6 +2,6 @@
 import mongoose from 'mongoose';
 import poemSchema from './poems-schema';
 
-const poemModel = mongoose.model('TuitModel', poemSchema);
+const poemModel = mongoose.model('PoemModel', poemSchema);
 
 export default poemModel;

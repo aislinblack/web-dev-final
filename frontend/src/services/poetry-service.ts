@@ -20,7 +20,6 @@ export const findPoem = (title: string, author: string) => {
       )}/title/${encodeURIComponent(title)}`
     )
     .then((res) => {
-      console.log(res.data);
       return res.data;
     });
 };
@@ -35,4 +34,19 @@ export const findDailyRandomPoems = () => {
   return axios.get(`${POETRY_API}/daily/random`).then((res) => {
     return res.data;
   });
+};
+
+export const commentOnPoem = (
+  pid: string,
+  comment: string,
+  commentor: string
+) => {
+  return axios
+    .put(`${POETRY_API}/${pid}/comment`, {
+      comment,
+      postedBy: commentor,
+    })
+    .then((res) => {
+      return res.data;
+    });
 };

@@ -1,6 +1,11 @@
 import poetrydb from '../services/poetrydb';
 import { isYesterday } from 'date-fns';
-import { createPoem, findPoemByAuthorAndTitle } from '../poems/poems-dao';
+import {
+  createPoem,
+  findPoemByAuthorAndTitle,
+  findPoemById,
+  updatePoem,
+} from '../poems/poems-dao';
 
 const getAuthors = async (req, res) => {
   const data = await poetrydb.findAuthors();
@@ -64,10 +69,24 @@ const findPoem = async (req, res) => {
   res.send({ ...alsoMaybePoem._doc, lines: maybePoem.lines });
 };
 
+const createComment = async (req, res) => {
+  const poemId = req.params.pid;
+  const poem = await findPoemById(poemId);
+  const newComments = [...poem.comments, req.body];
+
+  const status = await updatePoem(poemId, {
+    ...poem._doc,
+    comments: newComments,
+  });
+
+  res.send({ status });
+};
+
 export default (app) => {
   app.get('/api/authors', getAuthors);
   app.get('/api/poems', searchForPoems);
   app.get('/api/poems/daily/random', findRandomPoemsDaily);
   app.get('/api/poems/random/:number', findRandomPoems);
   app.get('/api/poems/author/:author/title/:title', findPoem);
+  app.put('/api/poems/:pid/comment', createComment);
 };

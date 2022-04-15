@@ -9,7 +9,6 @@ const Search = () => {
 
   const searchForPoems = (title: string, author: string) => {
     findPoems(title, author).then((data: any) => {
-      console.log(data);
       setSearchResults(data.data);
     });
   };

@@ -13,8 +13,6 @@ const findPoems = (args: { title?: string; author?: string }) => {
     args.title ? `/title/${encodeURIComponent(args.title)}` : ''
   }${args.author ? `/author/${encodeURIComponent(args.author)}` : ''}`;
 
-  console.log(url);
-
   return axios
     .get(url)
     .then((response) => {
@@ -24,7 +22,6 @@ const findPoems = (args: { title?: string; author?: string }) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(error);
       return [];
     });
 };
