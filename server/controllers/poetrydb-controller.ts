@@ -1,5 +1,6 @@
 import poetrydb from '../services/poetrydb';
 import { isYesterday } from 'date-fns';
+import { createPoem, findPoemByAuthorAndTitle } from '../poems/poems-dao';
 
 const getAuthors = async (req, res) => {
   const data = await poetrydb.findAuthors();
@@ -18,8 +19,6 @@ let randomPoems = [];
 let lastRefresh = new Date();
 
 const findRandomPoemsDaily = async (req, res) => {
-  console.log(randomPoems);
-  // console.log('hi');
   if (randomPoems.length === 0 || isYesterday(lastRefresh)) {
     const data = await poetrydb.randomPoems(5);
     randomPoems = data;
@@ -42,7 +41,27 @@ const findPoem = async (req, res) => {
     throw new Error('No Such Poem');
   }
 
-  res.send(maybePoem);
+  let alsoMaybePoem = await findPoemByAuthorAndTitle(
+    maybePoem.author,
+    maybePoem.title
+  ).exec();
+
+  if (!alsoMaybePoem) {
+    createPoem({
+      title: maybePoem.title,
+      author: maybePoem.author,
+      likes: 0,
+      comments: [],
+      ratings: [],
+    }).then((res) => {
+      return res;
+    });
+
+    res.send({ ...maybePoem, comments: [], rating: [], likes: 0 });
+    return;
+  }
+
+  res.send({ ...alsoMaybePoem._doc, lines: maybePoem.lines });
 };
 
 export default (app) => {
