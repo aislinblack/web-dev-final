@@ -8,12 +8,12 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Name of site!</h1>
+      <h1>Poetry of our Own</h1>
       <RandomPoems />
       {isLoggedIn && <Recommendations />}
       <div>
         <h3>
-          Find a poem?{' '}
+          Find a poem?
           <button onClick={() => navigate('search')}>Search!</button>
         </h3>
       </div>
