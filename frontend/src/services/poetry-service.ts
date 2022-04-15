@@ -30,3 +30,9 @@ export const findRandomPoems = () => {
     return res.data;
   });
 };
+
+export const findDailyRandomPoems = () => {
+  return axios.get(`${POETRY_API}/daily/random`).then((res) => {
+    return res.data;
+  });
+};

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { findRandomPoems } from '../../services/poetry-service';
+import { findDailyRandomPoems } from '../../services/poetry-service';
 
 const RandomPoems = () => {
   const [loading, setLoading] = useState(true);
   const [poems, setPoems] = useState<Record<string, string>[]>([]);
 
   useEffect(() => {
-    findRandomPoems().then((res) => {
+    findDailyRandomPoems().then((res) => {
       setPoems(res);
       setLoading(false);
     });
