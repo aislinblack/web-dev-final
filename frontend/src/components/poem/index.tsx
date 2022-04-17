@@ -21,7 +21,7 @@ const Poem = () => {
   const title = params.title!;
 
   const calculateAverageRating = (array: number[]) => {
-    return array.length === 0
+    return !array || array.length === 0
       ? 0
       : array.reduce(
           (previousValue, currentValue) => previousValue + currentValue,
