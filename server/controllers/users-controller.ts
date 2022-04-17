@@ -4,6 +4,7 @@ const findAllUsers = async (req, res) => {
   const users = await userDao.findAllUsers();
   res.json(users);
 };
+
 const findUserById = async (req, res) => {
   const userId = req.params['id'];
   const user = await userDao.findUserById(userId);
@@ -35,6 +36,8 @@ const findUserByCredentials = async (req, res) => {
 const createUser = async (req, res) => {
   const user = req.body;
   const insertedUser = await userDao.createUser(user);
+  console.log(req.session ? 'exists' : 'null');
+  req.session.profile = user;
   res.json(insertedUser);
 };
 const updateUser = async (req, res) => {
@@ -49,11 +52,37 @@ const deleteUser = async (req, res) => {
   res.json(status);
 };
 
+const login = (req, res) => {
+  const credentials = req.body;
+  const profile = userDao.findUserByCredentials(
+    credentials.email,
+    credentials.password
+  );
+  if (profile) {
+    req.session['profile'] = profile;
+    res.sendStatus(200);
+    return;
+  }
+  res.sendStatus(403);
+};
+
+const logout = (req, res) => {
+  req.session.destroy();
+  res.sendStatus(200);
+};
+
+const profile = (req, res) => {
+  res.json(req.session['profile']);
+};
+
 export default (app) => {
   app.get('/api/users', findAllUsers);
   app.get('/api/users/:id', findUserById);
   app.get('/api/users/email/:email', findUserByEmail);
   app.post('/api/users/credentials', findUserByCredentials);
+  app.post('api/users/login', login);
+  app.post('/api/users/logout', logout);
+  app.post('/api/users/profile', profile);
   app.post('/api/users', createUser);
   app.put('/api/users/:id', updateUser);
   app.delete('/api/users/:id', deleteUser);

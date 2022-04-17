@@ -6,6 +6,9 @@ import Home from './components/home';
 import Poem from './components/poem';
 import Search from './components/search';
 import Profile from './components/profile';
+import Welcome from './components/welcome';
+import Login from './components/welcome/login';
+import Signup from './components/welcome/signup';
 
 function App() {
   return (
@@ -14,10 +17,14 @@ function App() {
         <Routes>
           <Route path='/'>
             <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />} />
             <Route path='poem/:author/:title' element={<Poem />}></Route>
             <Route path='search' element={<Search />}></Route>
             <Route path='profile/:uid' element={<Profile />}></Route>
             <Route path='profile/' element={<Profile />}></Route>
+            <Route path='welcome/' element={<Welcome />}></Route>
+            <Route path='login/' element={<Login />}></Route>
+            <Route path='signup/' element={<Signup />}></Route>
           </Route>
         </Routes>
       </div>
