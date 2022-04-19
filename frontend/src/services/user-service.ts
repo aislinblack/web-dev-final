@@ -7,8 +7,25 @@ export const signup = (args: {
   lastName: string;
   email: string;
   password: string;
+  role: 'author' | 'reader' | 'critic';
 }) => {
-  return axios.post(`${API_BASE}/api/users`, args).then((response) => {
+  return axios
+    .post(`${API_BASE}/api/users`, args, { withCredentials: true })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const login = (args: { email: string; password: string }) => {
+  return axios
+    .post(`${API_BASE}/api/users/login`, args, { withCredentials: true })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const findUserById = (id: string) => {
+  return axios.get(`${API_BASE}/api/users/${id}`).then((response) => {
     return response.data;
   });
 };

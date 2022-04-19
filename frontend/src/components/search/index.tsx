@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { findPoems } from '../../services/poetry-service';
+import { Link } from 'react-router-dom';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,8 +28,20 @@ const Search = () => {
       </button>
       <div>
         {searchResults.map((search) => (
-          <div key={`${search.title}${search.author}${search.lineCount}`}>
-            {search.title}
+          <div
+            className='row mb-1'
+            key={`${search.title}${search.author}${search.lineCount}`}
+          >
+            <div className='col'>{search.author}</div>
+            <div className='col'>{search.title}</div>
+            <Link
+              className='col'
+              to={`poem/${encodeURIComponent(
+                search.author
+              )}/${encodeURIComponent(search.title)}`}
+            >
+              Read Poem
+            </Link>
           </div>
         ))}
       </div>

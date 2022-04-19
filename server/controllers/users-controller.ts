@@ -36,7 +36,7 @@ const findUserByCredentials = async (req, res) => {
 const createUser = async (req, res) => {
   const user = req.body;
   const insertedUser = await userDao.createUser(user);
-  console.log(req.session ? 'exists' : 'null');
+
   req.session.profile = user;
   res.json(insertedUser);
 };
@@ -52,18 +52,19 @@ const deleteUser = async (req, res) => {
   res.json(status);
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const credentials = req.body;
-  const profile = userDao.findUserByCredentials(
+  const profile = await userDao.findUserByCredentials(
     credentials.email,
     credentials.password
   );
+
   if (profile) {
     req.session['profile'] = profile;
-    res.sendStatus(200);
-    return;
+
+    return res.json({ status: 200 });
   }
-  res.sendStatus(403);
+  res.json({ status: 403 });
 };
 
 const logout = (req, res) => {
@@ -80,7 +81,7 @@ export default (app) => {
   app.get('/api/users/:id', findUserById);
   app.get('/api/users/email/:email', findUserByEmail);
   app.post('/api/users/credentials', findUserByCredentials);
-  app.post('api/users/login', login);
+  app.post('/api/users/login', login);
   app.post('/api/users/logout', logout);
   app.post('/api/users/profile', profile);
   app.post('/api/users', createUser);

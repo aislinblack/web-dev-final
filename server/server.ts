@@ -3,7 +3,6 @@ import cors from 'cors';
 import poetrydbController from './controllers/poetrydb-controller';
 import mongoose from 'mongoose';
 import usersController from './controllers/users-controller';
-import authController from './controllers/auth-controller';
 import session from 'express-session';
 
 const CONNECTION_STRING =
@@ -12,7 +11,14 @@ const CONNECTION_STRING =
 mongoose.connect(CONNECTION_STRING);
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    exposedHeaders: ['set-cookie'],
+    allowedHeaders: ['Content-Type', 'X-Requested-With'],
+    origin: ['http://localhost:3000'],
+  })
+);
 app.use(express.json());
 app.use(
   session({

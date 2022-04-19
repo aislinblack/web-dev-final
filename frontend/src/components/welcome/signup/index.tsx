@@ -8,14 +8,14 @@ const Signup = () => {
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [role, setRole] = useState<'author' | 'reader' | 'critic'>('reader');
   const navigate = useNavigate();
 
   const signUp = useCallback(() => {
-    signup({ firstName, lastName, email, password }).then((response) => {
-      console.log(response);
+    signup({ firstName, lastName, email, password, role }).then((response) => {
       navigate('/home');
     });
-  }, [firstName, lastName, email, password, navigate]);
+  }, [firstName, lastName, email, password, role, navigate]);
 
   return (
     <div className='wd-center'>
@@ -33,6 +33,26 @@ const Signup = () => {
           value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
+      </p>
+      <p>
+        Role:
+        <select
+          value={role}
+          onChange={(event) => {
+            if (
+              event.target.value !== 'reader' &&
+              event.target.value !== 'author' &&
+              event.target.value !== 'critic'
+            ) {
+              throw new Error('How??');
+            }
+            setRole(event.target.value);
+          }}
+        >
+          <option value='reader'>Reader</option>
+          <option value='author'>Author</option>
+          <option value='critic'>Critic</option>
+        </select>
       </p>
       <p>
         Email:

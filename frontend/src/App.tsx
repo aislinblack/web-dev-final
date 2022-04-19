@@ -9,6 +9,8 @@ import Profile from './components/profile';
 import Welcome from './components/welcome';
 import Login from './components/welcome/login';
 import Signup from './components/welcome/signup';
+import PO3 from './po3';
+import Privacy from './components/privacy';
 
 function App() {
   return (
@@ -16,11 +18,14 @@ function App() {
       <div className='container'>
         <Routes>
           <Route path='/'>
-            <Route path='/' element={<Home />} />
-            <Route path='/home' element={<Home />} />
-            <Route path='poem/:author/:title' element={<Poem />}></Route>
-            <Route path='search' element={<Search />}></Route>
-            <Route path='profile/:uid' element={<Profile />}></Route>
+            <Route path='/' element={<PO3 />}>
+              <Route path='profile/' element={<Profile />}></Route>
+              <Route path='search' element={<Search />}></Route>
+              <Route path='/home' element={<Home />} />
+              <Route path='poem/:author/:title' element={<Poem />}></Route>
+              <Route path='privacy' element={<Privacy />}></Route>
+              <Route path='/' element={<Home />}></Route>
+            </Route>
             <Route path='profile/' element={<Profile />}></Route>
             <Route path='welcome/' element={<Welcome />}></Route>
             <Route path='login/' element={<Login />}></Route>

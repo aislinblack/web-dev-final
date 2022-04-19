@@ -34,7 +34,7 @@ const RandomPoems = () => {
               <div className='col'>{poem.rating}</div>
               <div className='col'>
                 <Link
-                  to={`poem/${encodeURIComponent(
+                  to={`/poem/${encodeURIComponent(
                     poem.author
                   )}/${encodeURIComponent(poem.title)}`}
                 >

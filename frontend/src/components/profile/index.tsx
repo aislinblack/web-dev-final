@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import './index.css';
 import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { findUserById } from '../../services/user-service';
 
 const FakeUser = {
   name: 'Fake User',
@@ -14,9 +16,20 @@ const FakeUser = {
   followers: [],
   following: [],
 };
+
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: 'author' | 'reader' | '';
+};
+
 const Profile = () => {
   const params = useParams();
   const showPrivateDetails = !params.uid;
+  const userId = params.uid;
+
+  const [user, setUser] = useState<null | User>(null);
 
   return (
     <div className='d-flex justify-content-center'>
