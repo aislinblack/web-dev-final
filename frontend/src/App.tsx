@@ -11,27 +11,40 @@ import Login from './components/welcome/login';
 import Signup from './components/welcome/signup';
 import PO3 from './po3';
 import Privacy from './components/privacy';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import userReducer from './reducers/user-reducer';
+
+const reducer = combineReducers({ userInfo: userReducer });
+const store = createStore(reducer);
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;
 
 function App() {
   return (
     <BrowserRouter>
       <div className='container'>
-        <Routes>
-          <Route path='/'>
-            <Route path='/' element={<PO3 />}>
+        <Provider store={store}>
+          <Routes>
+            <Route path='/'>
+              <Route path='/' element={<PO3 />}>
+                <Route path='profile/' element={<Profile />}></Route>
+                <Route path='search' element={<Search />}></Route>
+                <Route path='/home' element={<Home />} />
+                <Route path='poem/:author/:title' element={<Poem />}></Route>
+                <Route path='privacy' element={<Privacy />}></Route>
+                <Route path='/' element={<Home />}></Route>
+              </Route>
               <Route path='profile/' element={<Profile />}></Route>
-              <Route path='search' element={<Search />}></Route>
-              <Route path='/home' element={<Home />} />
-              <Route path='poem/:author/:title' element={<Poem />}></Route>
-              <Route path='privacy' element={<Privacy />}></Route>
-              <Route path='/' element={<Home />}></Route>
+              <Route path='welcome/' element={<Welcome />}></Route>
+              <Route path='login/' element={<Login />}></Route>
+              <Route path='signup/' element={<Signup />}></Route>
             </Route>
-            <Route path='profile/' element={<Profile />}></Route>
-            <Route path='welcome/' element={<Welcome />}></Route>
-            <Route path='login/' element={<Login />}></Route>
-            <Route path='signup/' element={<Signup />}></Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </Provider>
       </div>
     </BrowserRouter>
   );

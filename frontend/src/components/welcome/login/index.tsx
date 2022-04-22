@@ -1,6 +1,11 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../../services/user-service';
+import { Store } from 'redux';
+import { signIn } from '../../../actions/user-actions';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+
 import '../index.css';
 
 const Login = () => {
@@ -8,15 +13,23 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((store) => store.userInfo);
+  console.log(userInfo);
 
   const logIn = () => {
     setLoading(true);
-    login({ email, password })
-      .then(() => {
-        navigate('/home');
-      })
-      .finally(() => setLoading(false));
+    signIn(dispatch, { email, password }).then(() => {});
   };
+
+  // const logIn = () => {
+  //   setLoading(true);
+  //   login({ email, password })
+  //     .then(() => {
+  //       navigate('/home');
+  //     })
+  //     .finally(() => setLoading(false));
+  // };
   return (
     <div className='wd-center'>
       <h3>Login</h3>

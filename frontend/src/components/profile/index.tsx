@@ -3,6 +3,7 @@ import './index.css';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { findUserById } from '../../services/user-service';
+import { User } from '../../types/user';
 
 const FakeUser = {
   name: 'Fake User',
@@ -15,13 +16,6 @@ const FakeUser = {
   dateJoined: new Date(),
   followers: [],
   following: [],
-};
-
-type User = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: 'author' | 'reader' | '';
 };
 
 const Profile = () => {
