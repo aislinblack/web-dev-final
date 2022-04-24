@@ -62,7 +62,7 @@ const login = async (req, res) => {
   if (profile) {
     req.session['profile'] = profile;
 
-    return res.json({ status: 200 });
+    return res.json({ status: 200, user: profile });
   }
   res.json({ status: 403 });
 };

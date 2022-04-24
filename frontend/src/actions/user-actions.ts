@@ -12,5 +12,5 @@ export const signIn = async (
 ) => {
   const result = await login(args);
   console.log(result);
-  dispatch({ type: SIGN_IN, user: result });
+  dispatch({ type: SIGN_IN, user: result.user });
 };

@@ -15,21 +15,19 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((store) => store.userInfo);
-  console.log(userInfo);
 
   const logIn = () => {
     setLoading(true);
-    signIn(dispatch, { email, password }).then(() => {});
+    signIn(dispatch, { email, password }).then(() => {
+      if (userInfo.loggedIn) {
+        navigate('/home');
+      }
+      setEmail('');
+      setPassword('');
+      setLoading(false);
+    });
   };
 
-  // const logIn = () => {
-  //   setLoading(true);
-  //   login({ email, password })
-  //     .then(() => {
-  //       navigate('/home');
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
   return (
     <div className='wd-center'>
       <h3>Login</h3>
