@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Store } from 'redux';
+
 import { signIn } from '../../../actions/user-actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
@@ -16,10 +14,16 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((store) => store.userInfo);
 
+  useEffect(() => {
+    if (userInfo.loggedIn) {
+      navigate('/home');
+    }
+  }, [navigate, userInfo.loggedIn]);
+
   const logIn = () => {
     setLoading(true);
-    signIn(dispatch, { email, password }).then(() => {
-      if (userInfo.loggedIn) {
+    signIn(dispatch, { email, password }).then((result) => {
+      if (result.loggedIn) {
         navigate('/home');
       }
       setEmail('');

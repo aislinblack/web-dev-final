@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './index.css';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { findUserById } from '../../services/user-service';
 import { User } from '../../types/user';
+import { useAppSelector } from '../../hooks';
 
 const FakeUser = {
   name: 'Fake User',
@@ -22,8 +23,14 @@ const Profile = () => {
   const params = useParams();
   const showPrivateDetails = !params.uid;
   const userId = params.uid;
+  const userInfo = useAppSelector((state) => state.userInfo);
+  const navigate = useNavigate();
 
-  const [user, setUser] = useState<null | User>(null);
+  useEffect(() => {
+    if (!userId && !userInfo.loggedIn) {
+      navigate('/uh-oh');
+    }
+  }, [userInfo, userId, navigate]);
 
   return (
     <div className='d-flex justify-content-center'>
