@@ -4,6 +4,7 @@ import {
   createPoem,
   findPoemByAuthorAndTitle,
   findPoemById,
+  findPoemByIdAndUpdate,
   updatePoem,
 } from '../poems/poems-dao';
 
@@ -91,14 +92,28 @@ const findPoem = async (req, res) => {
 const createComment = async (req, res) => {
   const poemId = req.params.pid;
   const poem = await findPoemById(poemId);
-  const newComments = [...poem.comments, req.body];
+  const comment = req.body.comment;
+  const userProfile = req.session.profile;
 
-  const status = await updatePoem(poemId, {
+  if (!userProfile) {
+    throw new Error('Must be logged in to post a comment');
+  }
+
+  const newComments = [
+    ...poem.comments,
+    {
+      postedByName: `${userProfile.firstName} ${userProfile.lastName}`,
+      postedById: userProfile.id,
+      comment,
+    },
+  ];
+
+  const updatedComment = await findPoemByIdAndUpdate(poemId, {
     ...poem._doc,
     comments: newComments,
   });
 
-  res.send({ status });
+  res.send({ updatedComment });
 };
 
 export default (app) => {

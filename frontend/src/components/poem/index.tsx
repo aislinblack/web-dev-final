@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import { commentOnPoem, findPoem } from '../../services/poetry-service';
 
 type PoemType = {
@@ -9,7 +10,7 @@ type PoemType = {
   title: string;
   likes: number;
   ratings: number[];
-  comments: { postedBy: string; comment: string }[];
+  comments: { postedByName: string; comment: string }[];
 };
 
 const Poem = () => {
@@ -19,6 +20,7 @@ const Poem = () => {
   const params = useParams();
   const author = params.author!;
   const title = params.title!;
+  const userInfo = useAppSelector((state) => state.userInfo);
 
   const calculateAverageRating = (array: number[]) => {
     return !array || array.length === 0
@@ -32,12 +34,9 @@ const Poem = () => {
     if (!poem) {
       return;
     }
-    await commentOnPoem(poem!._id, comment, 'someone');
+    const res = await commentOnPoem(poem!._id, comment);
 
-    setPoem({
-      ...poem,
-      comments: [{ postedBy: 'someone', comment: comment }, ...poem.comments],
-    });
+    setPoem({ ...res.updatedComment, lines: poem.lines });
   };
 
   useEffect(() => {
@@ -62,23 +61,25 @@ const Poem = () => {
     <div>
       <h1>{title}</h1>
       <h4>{author}</h4>
-      {poem.lines.map((line) => (
-        <div>{line}</div>
+      {poem.lines.map((line, index) => (
+        <div key={`${line}${index}`}>{line}</div>
       ))}
 
       <div className='mt-5'>
         Likes: {poem.likes} Rating: {calculateAverageRating(poem.ratings)}
       </div>
-      <div>
-        <textarea
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}
-        />
-        <button onClick={sendComment}>Comment!</button>
-      </div>
-      {poem.comments.map((comment) => (
+      {userInfo.loggedIn && (
         <div>
-          {comment.comment} - {comment.postedBy}
+          <textarea
+            value={comment}
+            onChange={(event) => setComment(event.target.value)}
+          />
+          <button onClick={sendComment}>Comment!</button>
+        </div>
+      )}
+      {poem.comments.reverse().map((comment, index) => (
+        <div key={index}>
+          {comment.comment} - {comment.postedByName}
         </div>
       ))}
     </div>

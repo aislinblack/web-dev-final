@@ -9,4 +9,7 @@ export const deletePoem = (pid) => poemsModel.deleteOne({ _id: pid });
 export const updatePoem = (pid, poem) =>
   poemsModel.updateOne({ _id: pid }, { $set: poem });
 
+export const findPoemByIdAndUpdate = (pid, poem) =>
+  poemsModel.findByIdAndUpdate({ _id: pid }, { $set: poem }, { new: true });
+
 export default { findAllPoems, createPoem, deletePoem, updatePoem };

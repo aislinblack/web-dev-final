@@ -61,6 +61,7 @@ const login = async (req, res) => {
 
   if (profile) {
     req.session['profile'] = profile;
+    console.log(req.session);
 
     return res.json({ status: 200, user: profile });
   }
