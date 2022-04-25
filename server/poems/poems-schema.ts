@@ -4,10 +4,10 @@ const schema = new Schema(
   {
     title: String,
     author: String,
-    likes: Number,
+    likes: [{ type: Schema.Types.ObjectId, ref: 'UsersModel' }],
     comments: [
       {
-        postedBy: String,
+        postedBy: { type: Schema.Types.ObjectId, ref: 'UsersModel' },
         comment: String,
       },
     ],

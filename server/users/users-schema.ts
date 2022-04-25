@@ -7,6 +7,11 @@ const usersSchema = new mongoose.Schema(
     role: String,
     firstName: String,
     lastName: { type: String },
+    authorProfile: { required: false },
+    criticProfile: { required: false },
+    readerProfile: {},
+    followers: { type: Number, default: 0 },
+    following: { type: Number, default: 0 },
   },
   { collection: 'users' }
 );

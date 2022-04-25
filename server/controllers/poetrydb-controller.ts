@@ -26,8 +26,27 @@ let lastRefresh = new Date();
 const findRandomPoemsDaily = async (req, res) => {
   if (randomPoems.length === 0 || isYesterday(lastRefresh)) {
     const data = await poetrydb.randomPoems(5);
-    randomPoems = data;
+
+    const sanitizedPoems = await Promise.all(
+      data.map(async (randomPoem) => {
+        let maybePoem = await findPoemByAuthorAndTitle(
+          randomPoem.author,
+          randomPoem.title
+        ).exec();
+
+        if (!maybePoem) {
+          return createPoem({
+            title: randomPoem.title,
+            author: randomPoem.author,
+          });
+        }
+        return maybePoem;
+      })
+    );
+
+    randomPoems = sanitizedPoems;
     lastRefresh = new Date();
+    return res.send(sanitizedPoems);
   }
   res.send(randomPoems);
 };
