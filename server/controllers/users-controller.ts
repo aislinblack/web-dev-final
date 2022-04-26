@@ -37,7 +37,7 @@ const createUser = async (req, res) => {
   const user = req.body;
   const insertedUser = await userDao.createUser(user);
 
-  req.session.profile = user;
+  req.session.profile = insertedUser;
   res.json(insertedUser);
 };
 const updateUser = async (req, res) => {

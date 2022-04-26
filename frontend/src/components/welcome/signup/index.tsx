@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../../../services/user-service';
+import { signUp } from '../../../actions/user-actions';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+
 import '../index.css';
 
 const Signup = () => {
@@ -10,12 +12,18 @@ const Signup = () => {
   const [password, setPassword] = useState<string>('');
   const [role, setRole] = useState<'author' | 'reader' | 'critic'>('reader');
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((store) => store.userInfo);
 
-  const signUp = useCallback(() => {
-    signup({ firstName, lastName, email, password, role }).then((response) => {
+  useEffect(() => {
+    if (userInfo.loggedIn) {
       navigate('/home');
-    });
-  }, [firstName, lastName, email, password, role, navigate]);
+    }
+  }, [navigate, userInfo.loggedIn]);
+
+  const signup = useCallback(() => {
+    signUp(dispatch, { firstName, lastName, email, password, role });
+  }, [dispatch, firstName, lastName, email, password, role]);
 
   return (
     <div className='wd-center'>
@@ -69,7 +77,7 @@ const Signup = () => {
           onChange={(event) => setPassword(event.target.value)}
         />
       </p>
-      <button onClick={() => signUp()}>Signup</button>
+      <button onClick={() => signup()}>Signup</button>
     </div>
   );
 };
