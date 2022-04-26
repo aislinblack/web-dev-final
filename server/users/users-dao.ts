@@ -11,6 +11,8 @@ const findUserByEmail = (email) => userModel.findOne({ email });
 // userModel.findOne({email: email})
 // userModel.find({email: email})
 
+const findUsersByRole = (role) => userModel.find({ role });
+
 const findUserByCredentials = (email, password) =>
   userModel.findOne({ email, password });
 // userModel.findOne({email: email, password: password})
@@ -38,4 +40,5 @@ export default {
   createUser: createUser,
   deleteUser: deleteUser,
   updateUser: updateUser,
+  findUsersByRole,
 };

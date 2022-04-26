@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
 import { commentOnPoem, findPoem } from '../../services/poetry-service';
+import Review from './review';
+import PoemBody from './poem-body';
 
-type PoemType = {
+export type PoemType = {
   _id: string;
   lines: string[];
   author: string;
@@ -15,22 +16,12 @@ type PoemType = {
 
 const Poem = () => {
   const [poem, setPoem] = useState<null | PoemType>(null);
-  const [comment, setComment] = useState('');
 
   const params = useParams();
   const author = params.author!;
   const title = params.title!;
-  const userInfo = useAppSelector((state) => state.userInfo);
 
-  const calculateAverageRating = (array: number[]) => {
-    return !array || array.length === 0
-      ? 0
-      : array.reduce(
-          (previousValue, currentValue) => previousValue + currentValue,
-          0
-        ) / array.length;
-  };
-  const sendComment = async () => {
+  const sendComment = async (comment: string) => {
     if (!poem) {
       return;
     }
@@ -58,31 +49,13 @@ const Poem = () => {
   }
 
   return (
-    <div>
-      <h1>{title}</h1>
-      <h4>{author}</h4>
-      {poem.lines.map((line, index) => (
-        <div key={`${line}${index}`}>{line}</div>
-      ))}
-
-      <div className='mt-5'>
-        Likes: {poem.likes.length} Rating:
-        {calculateAverageRating(poem.ratings)}
+    <div className='row'>
+      <div className='col'>
+        <PoemBody poem={poem} sendComment={sendComment} />
       </div>
-      {userInfo.loggedIn && (
-        <div>
-          <textarea
-            value={comment}
-            onChange={(event) => setComment(event.target.value)}
-          />
-          <button onClick={sendComment}>Comment!</button>
-        </div>
-      )}
-      {poem.comments.reverse().map((comment, index) => (
-        <div key={index}>
-          {comment.comment} - {comment.postedByName}
-        </div>
-      ))}
+      <div className='col'>
+        <Review />
+      </div>
     </div>
   );
 };

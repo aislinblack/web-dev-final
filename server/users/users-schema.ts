@@ -9,7 +9,7 @@ const usersSchema = new mongoose.Schema(
     lastName: { type: String },
     authorProfile: { required: false },
     criticProfile: { required: false },
-    readerProfile: {},
+    readerProfile: { required: false },
     followers: { type: Number, default: 0 },
     following: { type: Number, default: 0 },
   },
