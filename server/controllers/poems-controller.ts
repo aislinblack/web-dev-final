@@ -45,7 +45,6 @@ const findRandomPoemsDaily = async (req, res) => {
       })
     );
 
-    randomPoems = sanitizedPoems;
     lastRefresh = new Date();
     return res.send(sanitizedPoems);
   }
@@ -75,7 +74,7 @@ const findPoem = async (req, res) => {
     createPoem({
       title: maybePoem.title,
       author: maybePoem.author,
-      likes: 0,
+      likes: [],
       comments: [],
       ratings: [],
     }).then((res) => {

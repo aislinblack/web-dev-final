@@ -8,7 +8,7 @@ type PoemType = {
   lines: string[];
   author: string;
   title: string;
-  likes: number;
+  likes: any[];
   ratings: number[];
   comments: { postedByName: string; comment: string }[];
 };
@@ -66,7 +66,8 @@ const Poem = () => {
       ))}
 
       <div className='mt-5'>
-        Likes: {poem.likes} Rating: {calculateAverageRating(poem.ratings)}
+        Likes: {poem.likes.length} Rating:
+        {calculateAverageRating(poem.ratings)}
       </div>
       {userInfo.loggedIn && (
         <div>

@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import poetrydbController from './controllers/poetrydb-controller';
+import poetrydbController from './controllers/poems-controller';
 import mongoose from 'mongoose';
 import usersController from './controllers/users-controller';
 import session from 'express-session';
+import reviewsController from './controllers/reviews-controller';
+import criticsController from './controllers/critics-controller';
 
 const CONNECTION_STRING =
   process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/poetry';
@@ -36,5 +38,7 @@ app.use(function (error, req, res, next) {
 
 poetrydbController(app);
 usersController(app);
+reviewsController(app);
+criticsController(app);
 
 app.listen(process.env.PORT || 4000);

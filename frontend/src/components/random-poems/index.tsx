@@ -30,7 +30,7 @@ const RandomPoems = () => {
             <div className='row'>
               <div className='col'>{poem.author}</div>
               <div className='col'>{poem.title}</div>
-              <div className='col'>{poem.likes}</div>
+              <div className='col'>{poem.likes.length}</div>
               <div className='col'>{poem.rating}</div>
               <div className='col'>
                 <Link
