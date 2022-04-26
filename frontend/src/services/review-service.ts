@@ -12,8 +12,15 @@ export const postReview = (args: {
   text: string;
   collaborators: string[];
   rating: number;
+  poemId: string;
 }) => {
   return instance.post('', args).then((result) => {
     console.log(result.data);
   });
+};
+
+export const getReviews = (args: { poem?: string }) => {
+  return instance
+    .get('', { params: { poem: args.poem } })
+    .then((res) => res.data);
 };

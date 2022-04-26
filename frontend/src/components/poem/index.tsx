@@ -54,7 +54,7 @@ const Poem = () => {
         <PoemBody poem={poem} sendComment={sendComment} />
       </div>
       <div className='col'>
-        <Review />
+        <Review poemId={poem._id} />
       </div>
     </div>
   );

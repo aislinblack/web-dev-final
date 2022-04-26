@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { postReview } from '../../../services/review-service';
 
-const ReviewForm = () => {
+const ReviewForm = ({ poemId }: { poemId: string }) => {
   const [rating, setRating] = useState(1);
   const [reviewBody, setReviewBody] = useState('');
 
   const onSubmit = () => {
-    postReview({ text: reviewBody, rating: rating, collaborators: [] }).then(
-      (res) => {
-        console.log(res);
-      }
-    );
+    postReview({
+      text: reviewBody,
+      rating: rating,
+      collaborators: [],
+      poemId,
+    }).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -30,7 +33,7 @@ const ReviewForm = () => {
             <option value={5}>5</option>
           </select>
         </div>
-        <div className='col'>yo</div>
+        <div className='col'></div>
       </div>
       <div className='m-1'>
         <label>Body</label>
