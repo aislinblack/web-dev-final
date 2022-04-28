@@ -8,7 +8,10 @@ const usersSchema = new mongoose.Schema(
     firstName: String,
     lastName: { type: String },
     authorProfile: { required: false },
-    criticProfile: { required: false },
+    criticProfile: {
+      required: false,
+      type: { organization: String, default: 'Self-Employed' },
+    },
     readerProfile: { required: false },
     followers: { type: Number, default: 0 },
     following: { type: Number, default: 0 },

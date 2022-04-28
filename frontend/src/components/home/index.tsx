@@ -1,10 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import RandomPoems from '../random-poems';
 import Recommendations from '../recommendations';
 
 const Home = () => {
-  const isLoggedIn = true;
   const navigate = useNavigate();
+  const isLoggedIn = useAppSelector((state) => state.userInfo.loggedIn);
 
   return (
     <div>
@@ -19,8 +20,11 @@ const Home = () => {
       </div>
       {!isLoggedIn && (
         <div>
-          <button>Sign up</button>
-          <button>Log in</button>
+          You don't seem to be signed in, would you like to:
+          <ul className='list-group'>
+            <Link to='/signup'>Sign up</Link>
+            <Link to='/login'>Log in</Link>
+          </ul>
         </div>
       )}
     </div>

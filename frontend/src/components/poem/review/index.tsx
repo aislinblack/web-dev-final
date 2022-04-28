@@ -23,7 +23,9 @@ const Reviews = ({ poemId }: { poemId: string }) => {
   return (
     <>
       <div>
-        <ReviewForm poemId={poemId} />
+        {userInfo.loggedIn && userInfo.user.role === 'critic' && (
+          <ReviewForm poemId={poemId} />
+        )}
         <div>
           <h4>Reviews:</h4>
           {reviews?.map((review) => {
