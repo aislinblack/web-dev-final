@@ -9,7 +9,6 @@ const PrivateProfile = () => {
   const navigate = useNavigate();
 
   if (!userInfo.loggedIn) {
-    navigate('/uh-oh');
     return <></>;
   }
 

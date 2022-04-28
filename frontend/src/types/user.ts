@@ -3,7 +3,7 @@ export type User = CriticProfile | AuthorProfile | ReaderProfile;
 type CriticProfile = {
   role: 'critic';
   criticProfile: {
-    organization: String;
+    organization: string;
   };
 } & GeneralAttributes;
 

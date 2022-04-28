@@ -41,7 +41,7 @@ export const findDailyRandomPoems = () => {
 
 export const findRecommendations = (userId: string) => {
   return instance
-    .get('popular', { params: { userId, count: 5 } })
+    .get('popular', { params: { count: 5 } })
     .then((res) => res.data);
 };
 

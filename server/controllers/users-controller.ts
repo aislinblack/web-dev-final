@@ -63,6 +63,7 @@ const deleteUser = async (req, res) => {
 
 const login = async (req, res) => {
   const credentials = req.body;
+
   const profile = await userDao.findUserByCredentials(
     credentials.email,
     credentials.password
@@ -70,7 +71,7 @@ const login = async (req, res) => {
 
   if (profile) {
     req.session['profile'] = profile;
-    console.log(req.session);
+    console.log(req.session['profile']);
 
     return res.json({ status: 200, user: profile });
   }
@@ -82,18 +83,19 @@ const logout = (req, res) => {
   res.sendStatus(200);
 };
 
-const profile = (req, res) => {
-  res.json(req.session['profile']);
+const getLoggedInUser = async (req, res) => {
+  console.log(req.session['profile']);
+  res.send(req.session['profile']);
 };
 
 export default (app) => {
   app.get('/api/users', findAllUsers);
+  app.get('/api/users/profile', getLoggedInUser);
   app.get('/api/users/:id', findUserById);
   app.get('/api/users/email/:email', findUserByEmail);
   app.post('/api/users/credentials', findUserByCredentials);
   app.post('/api/users/login', login);
   app.post('/api/users/logout', logout);
-  app.post('/api/users/profile', profile);
   app.post('/api/users', createUser);
   app.put('/api/users/:id', updateUser);
   app.delete('/api/users/:id', deleteUser);

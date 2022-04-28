@@ -29,3 +29,11 @@ export const findUserById = (id: string) => {
     return response.data;
   });
 };
+
+export const findLoggedInUser = () => {
+  return axios
+    .get(`${API_BASE}/api/users/profile`, { withCredentials: true })
+    .then((response) => {
+      return response.data;
+    });
+};

@@ -1,10 +1,15 @@
 import { Dispatch } from 'redux';
-import { login, signup } from '../services/user-service';
+import { findLoggedInUser, login, signup } from '../services/user-service';
 import { User } from '../types/user';
 
 export const SIGN_IN = 'SIGN_IN';
+export const REFRESHING = 'REFRESHING';
+export const NOT_REFRESHING = 'NOT_REFRESHING';
 
-export type UserActions = { type: 'SIGN_IN'; user: User };
+export type UserActions =
+  | { type: 'SIGN_IN'; user: User }
+  | { type: 'REFRESHING' }
+  | { type: 'NOT_REFRESHING' };
 
 export const signIn = async (
   dispatch: Dispatch,
@@ -30,4 +35,14 @@ export const signUp = async (
 
   dispatch({ type: SIGN_IN, user: result });
   return result.user;
+};
+
+export const findUser = async (dispatch: Dispatch) => {
+  dispatch({ type: REFRESHING });
+  const result = await findLoggedInUser();
+  console.log(result);
+  if (result) {
+    return dispatch({ type: SIGN_IN, user: result });
+  }
+  return dispatch({ type: NOT_REFRESHING });
 };

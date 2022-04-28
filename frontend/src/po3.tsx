@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { findUser } from './actions/user-actions';
 import NavigationSidebar from './components/navigation';
+import { useAppDispatch } from './hooks';
 
 const PO3 = () => {
   const location = useLocation();
   const activeTab = location.pathname.replace('/', '') || 'home';
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    findUser(dispatch);
+  });
 
   return (
     <div className='row mt-2'>
