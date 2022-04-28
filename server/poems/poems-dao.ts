@@ -15,10 +15,14 @@ export const findPoemByIdAndUpdate = (pid, poem) =>
 export const findPoemsNotLikedByUser = (pid) =>
   poemsModel.find({ $not: { likes: pid } });
 
+const likePoem = (pid, userId) =>
+  poemsModel.updateOne({ _id: pid }, { $push: userId });
+
 export default {
   findAllPoems,
   createPoem,
   deletePoem,
   updatePoem,
   findPoemsNotLikedByUser,
+  likePoem,
 };

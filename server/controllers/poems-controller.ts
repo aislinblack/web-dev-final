@@ -126,6 +126,14 @@ const getMostPopularPoems = async (req, res) => {
   res.send(poems);
 };
 
+const likePoem = async (req, res) => {
+  const pid = req.params.pid;
+  const userId = req.query.userId;
+  const update = await poemsDao.likePoem(pid, userId).exec();
+
+  res.send(update);
+};
+
 export default (app) => {
   app.get('/api/authors', getAuthors);
   app.get('/api/poems', searchForPoems);
@@ -134,4 +142,5 @@ export default (app) => {
   app.get('/api/poems/author/:author/title/:title', findPoem);
   app.put('/api/poems/:pid/comment', createComment);
   app.get('/api/poems/popular', getMostPopularPoems);
+  app.put('/api/poems/:pid/like', likePoem);
 };
