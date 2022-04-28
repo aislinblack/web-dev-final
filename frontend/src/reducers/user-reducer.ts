@@ -3,6 +3,7 @@ import {
   UserActions,
   REFRESHING,
   NOT_REFRESHING,
+  UPDATE_USER,
 } from '../actions/user-actions';
 import { User } from '../types/user';
 
@@ -16,6 +17,8 @@ const userReducer = (
 ): userInfoType => {
   switch (action.type) {
     case SIGN_IN:
+      return { loggedIn: true, user: action.user };
+    case UPDATE_USER:
       return { loggedIn: true, user: action.user };
     case REFRESHING:
       return { loggedIn: false, refreshing: true };

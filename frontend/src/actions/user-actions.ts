@@ -1,15 +1,24 @@
+import { UserInfo } from 'os';
+import { stringify } from 'querystring';
 import { Dispatch } from 'redux';
-import { findLoggedInUser, login, signup } from '../services/user-service';
+import {
+  findLoggedInUser,
+  login,
+  signup,
+  updateUser,
+} from '../services/user-service';
 import { User } from '../types/user';
 
 export const SIGN_IN = 'SIGN_IN';
 export const REFRESHING = 'REFRESHING';
 export const NOT_REFRESHING = 'NOT_REFRESHING';
+export const UPDATE_USER = 'UPDATE_USER';
 
 export type UserActions =
   | { type: 'SIGN_IN'; user: User }
   | { type: 'REFRESHING' }
-  | { type: 'NOT_REFRESHING' };
+  | { type: 'NOT_REFRESHING' }
+  | { type: 'UPDATE_USER'; user: User };
 
 export const signIn = async (
   dispatch: Dispatch,
@@ -40,9 +49,35 @@ export const signUp = async (
 export const findUser = async (dispatch: Dispatch) => {
   dispatch({ type: REFRESHING });
   const result = await findLoggedInUser();
-  console.log(result);
+
   if (result) {
     return dispatch({ type: SIGN_IN, user: result });
   }
   return dispatch({ type: NOT_REFRESHING });
+};
+
+export const updateCritic = async (
+  dispatch: Dispatch,
+  user: User,
+  {
+    firstName,
+    lastName,
+    organization,
+  }: { firstName: string; lastName: string; organization: string }
+) => {
+  if (user.role !== 'critic') {
+    return console.error('Cannot update non critic');
+  }
+  const updated: User = {
+    ...user,
+    firstName,
+    lastName,
+    criticProfile: { organization },
+  };
+
+  const result = await updateUser(updated);
+
+  console.log(result);
+
+  dispatch({ type: UPDATE_USER, user: updated });
 };

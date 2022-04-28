@@ -51,8 +51,10 @@ const createUser = async (req, res) => {
 };
 const updateUser = async (req, res) => {
   const user = req.body;
-  const userId = req.params['id'];
+  const userId = req.params['id'] || req.session['profile']._id;
   const status = await userDao.updateUser(userId, user);
+
+  req.session['profile'] = user;
   res.json(status);
 };
 const deleteUser = async (req, res) => {
@@ -97,6 +99,7 @@ export default (app) => {
   app.post('/api/users/login', login);
   app.post('/api/users/logout', logout);
   app.post('/api/users', createUser);
+  app.put('/api/users', updateUser);
   app.put('/api/users/:id', updateUser);
   app.delete('/api/users/:id', deleteUser);
 };

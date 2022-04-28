@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks';
+import { updateCritic } from '../../actions/user-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const EditProfile = () => {
+  const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.userInfo);
 
   const [newFirstName, setFirstName] = useState(
@@ -17,7 +19,15 @@ const EditProfile = () => {
       ''
   );
 
-  const saveProfile = () => {};
+  const saveProfile = () => {
+    if (userInfo.loggedIn && userInfo.user.role === 'critic') {
+      updateCritic(dispatch, userInfo.user, {
+        firstName: newFirstName,
+        lastName: newLastName,
+        organization: newAffiliation,
+      });
+    }
+  };
 
   return (
     <div>

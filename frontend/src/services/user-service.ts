@@ -37,3 +37,11 @@ export const findLoggedInUser = () => {
       return response.data;
     });
 };
+
+export const updateUser = (args: any) => {
+  return axios
+    .put(`${API_BASE}/api/users`, args, { withCredentials: true })
+    .then((response) => {
+      return response.data;
+    });
+};
