@@ -5,20 +5,20 @@ import Recommendations from '../recommendations';
 
 const Home = () => {
   const navigate = useNavigate();
-  const isLoggedIn = useAppSelector((state) => state.userInfo.loggedIn);
+  const userInfo = useAppSelector((state) => state.userInfo);
 
   return (
     <div>
       <h1>Poetry of our Own</h1>
       <RandomPoems />
-      {isLoggedIn && <Recommendations />}
+      {userInfo.loggedIn && <Recommendations userId={userInfo.user._id} />}
       <div>
         <h3>
           Find a poem?
           <button onClick={() => navigate('search')}>Search!</button>
         </h3>
       </div>
-      {!isLoggedIn && (
+      {!userInfo.loggedIn && (
         <div>
           You don't seem to be signed in, would you like to:
           <ul className='list-group'>

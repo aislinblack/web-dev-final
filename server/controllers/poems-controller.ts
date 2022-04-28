@@ -121,7 +121,7 @@ const getMostPopularPoems = async (req, res) => {
     ? poemsDao.findPoemsNotLikedByUser(req.query.userId)
     : poemsDao.findAllPoems();
 
-  const poems = await poemQuery.sort({ 'likes.length': 1 }).limit(poemCount);
+  const poems = await poemQuery.sort({ 'likes.length': -1 }).limit(poemCount);
 
   res.send(poems);
 };

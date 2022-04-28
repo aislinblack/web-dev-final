@@ -39,6 +39,12 @@ export const findDailyRandomPoems = () => {
   });
 };
 
+export const findRecommendations = (userId: string) => {
+  return instance
+    .get('popular', { params: { userId, count: 5 } })
+    .then((res) => res.data);
+};
+
 export const commentOnPoem = (pid: string, comment: string) => {
   return instance
     .put(
