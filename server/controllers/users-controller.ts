@@ -35,7 +35,16 @@ const findUserByCredentials = async (req, res) => {
 };
 const createUser = async (req, res) => {
   const user = req.body;
-  const insertedUser = await userDao.createUser(user);
+
+  const userType = req.body.role;
+
+  const insertedUser = await userDao.createUser({
+    ...user,
+    dateJoined: new Date(),
+    criticProfile: userType === 'critic' ? {} : undefined,
+    authorProfile: userType === 'author' ? {} : undefined,
+    readerProfile: userType === 'reader' ? {} : undefined,
+  });
 
   req.session.profile = insertedUser;
   res.json(insertedUser);

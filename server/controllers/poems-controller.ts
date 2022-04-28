@@ -122,12 +122,10 @@ const createComment = async (req, res) => {
 };
 
 const getMostPopularPoems = async (req, res) => {
-  const poemCount = req.query.count ? req.query.count : 5;
-  const poemQuery = req.query.userId
-    ? poemsDao.findPoemsNotLikedByUser(req.query.userId)
-    : poemsDao.findAllPoems();
+  const poemCount = req.query.count ? Number(req.query.count) : 5;
+  const poemQuery = poemsDao.findPoemsByLikeCount();
 
-  const poems = await poemQuery.sort({ 'likes.length': -1 }).limit(poemCount);
+  const poems = await poemQuery.limit(poemCount);
 
   res.send(poems);
 };

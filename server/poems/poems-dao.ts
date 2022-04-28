@@ -18,6 +18,18 @@ export const findPoemsNotLikedByUser = (pid) =>
 const likePoem = (pid, userId) =>
   poemsModel.updateOne({ _id: pid }, { $push: { likes: userId } });
 
+const findPoemsByLikeCount = () =>
+  poemsModel.aggregate([
+    {
+      $project: {
+        title: 1,
+        author: 1,
+        likeCount: { $size: '$likes' },
+      },
+    },
+    { $sort: { likeCount: -1 } },
+  ]);
+
 export default {
   findAllPoems,
   createPoem,
@@ -26,4 +38,5 @@ export default {
   findPoemsNotLikedByUser,
   likePoem,
   findPoemById,
+  findPoemsByLikeCount,
 };

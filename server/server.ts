@@ -29,16 +29,16 @@ app.use(
   })
 );
 
+poetrydbController(app);
+usersController(app);
+reviewsController(app);
+criticsController(app);
+
 app.use(function (error, req, res, next) {
   console.log('error', error);
   res.status(500);
   res.setHeader('Content-Type', 'application/json');
   res.json({ error: 'Failed to process request' });
 });
-
-poetrydbController(app);
-usersController(app);
-reviewsController(app);
-criticsController(app);
 
 app.listen(process.env.PORT || 4000);

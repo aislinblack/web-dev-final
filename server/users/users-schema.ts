@@ -7,14 +7,21 @@ const usersSchema = new mongoose.Schema(
     role: String,
     firstName: String,
     lastName: { type: String },
+    dateJoined: Date,
     authorProfile: { required: false },
     criticProfile: {
       required: false,
       type: { organization: { type: String, default: 'Self-Employed' } },
     },
     readerProfile: { required: false },
-    followers: { type: Number, default: 0 },
-    following: { type: Number, default: 0 },
+    followers: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UsersModel' }],
+      default: [],
+    },
+    following: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UsersModel' }],
+      default: [],
+    },
   },
   { collection: 'users' }
 );

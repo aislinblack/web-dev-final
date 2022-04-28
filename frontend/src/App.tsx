@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import userReducer from './reducers/user-reducer';
 import UhOh from './components/uh-oh';
+import EditProfile from './components/profile/edit-profile';
 
 const reducer = combineReducers({ userInfo: userReducer });
 const store = createStore(reducer);
@@ -38,8 +39,9 @@ function App() {
                 <Route path='poem/:author/:title' element={<Poem />}></Route>
                 <Route path='privacy' element={<Privacy />}></Route>
                 <Route path='/' element={<Home />}></Route>
+                <Route path='profile/:uid' element={<Profile />}></Route>
+                <Route path='edit-profile' element={<EditProfile />} />
               </Route>
-              <Route path='profile/:uid' element={<Profile />}></Route>
               <Route path='welcome/' element={<Welcome />}></Route>
               <Route path='login/' element={<Login />}></Route>
               <Route path='signup/' element={<Signup />}></Route>
