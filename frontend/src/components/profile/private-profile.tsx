@@ -17,7 +17,7 @@ const PrivateProfile = () => {
       <div className='text-center'>
         <img
           className='profile-pic'
-          src={getMeerkatByFirstName(userInfo.user.firstName)}
+          src={getMeerkatByFirstName(userInfo.user.email)}
           alt=''
         />
         <h3>

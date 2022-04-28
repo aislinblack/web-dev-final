@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { updateCritic } from '../../actions/user-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const EditProfile = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.userInfo);
+  const navigate = useNavigate();
 
   const [newFirstName, setFirstName] = useState(
     (userInfo.loggedIn && userInfo.user.firstName) || ''
@@ -25,7 +27,7 @@ const EditProfile = () => {
         firstName: newFirstName,
         lastName: newLastName,
         organization: newAffiliation,
-      });
+      }).then(() => navigate('/profile'));
     }
   };
 

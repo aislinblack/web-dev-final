@@ -44,7 +44,7 @@ const PublicProfile = ({ userId }: { userId: string }) => {
       <div className='text-center'>
         <img
           className='profile-pic'
-          src={getMeerkatByFirstName(user.firstName)}
+          src={getMeerkatByFirstName(user.email)}
           alt=''
         />
         <h3>
