@@ -16,7 +16,7 @@ export const findPoemsNotLikedByUser = (pid) =>
   poemsModel.find({ $not: { likes: pid } });
 
 const likePoem = (pid, userId) =>
-  poemsModel.updateOne({ _id: pid }, { $push: userId });
+  poemsModel.updateOne({ _id: pid }, { $push: { likes: userId } });
 
 export default {
   findAllPoems,
@@ -25,4 +25,5 @@ export default {
   updatePoem,
   findPoemsNotLikedByUser,
   likePoem,
+  findPoemById,
 };

@@ -7,6 +7,7 @@ import poemsDao, {
   findPoemByIdAndUpdate,
   updatePoem,
 } from '../poems/poems-dao';
+import usersDao from '../users/users-dao';
 
 const getAuthors = async (req, res) => {
   const data = await poetrydb.findAuthors();
@@ -17,7 +18,12 @@ const getAuthors = async (req, res) => {
 const searchForPoems = async (req, res) => {
   const title: string | undefined = req.query.title;
   const author: string | undefined = req.query.author;
-  const data = await poetrydb.findPoems({ title, author });
+
+  const data =
+    !title && !author
+      ? await poemsDao.findAllPoems()
+      : await poetrydb.findPoems({ title, author });
+
   res.send(data);
 };
 
@@ -129,9 +135,18 @@ const getMostPopularPoems = async (req, res) => {
 const likePoem = async (req, res) => {
   const pid = req.params.pid;
   const userId = req.query.userId;
-  const update = await poemsDao.likePoem(pid, userId).exec();
+  const lookupUser = await usersDao.findUserById(userId);
+
+  const update = await poemsDao.likePoem(pid, lookupUser._id);
 
   res.send(update);
+};
+
+const getPoem = async (req, res) => {
+  const pid = req.params.pid;
+  const poem = await poemsDao.findPoemById(pid);
+
+  res.send(poem);
 };
 
 export default (app) => {
@@ -143,4 +158,5 @@ export default (app) => {
   app.put('/api/poems/:pid/comment', createComment);
   app.get('/api/poems/popular', getMostPopularPoems);
   app.put('/api/poems/:pid/like', likePoem);
+  app.get('/api/poems/:pid', getPoem);
 };
