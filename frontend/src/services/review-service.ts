@@ -15,7 +15,7 @@ export const postReview = (args: {
   poemId: string;
 }) => {
   return instance.post('', args).then((result) => {
-    console.log(result.data);
+    return result.data;
   });
 };
 

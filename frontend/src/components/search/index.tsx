@@ -36,7 +36,7 @@ const Search = () => {
             <div className='col'>{search.title}</div>
             <Link
               className='col'
-              to={`poem/${encodeURIComponent(
+              to={`/poem/${encodeURIComponent(
                 search.author
               )}/${encodeURIComponent(search.title)}`}
             >

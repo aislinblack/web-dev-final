@@ -1,20 +1,15 @@
 import { useState } from 'react';
 import { postReview } from '../../../services/review-service';
 
-const ReviewForm = ({ poemId }: { poemId: string }) => {
+const ReviewForm = ({
+  poemId,
+  onSubmit,
+}: {
+  poemId: string;
+  onSubmit: (reviewBody: string, rating: number) => Promise<void>;
+}) => {
   const [rating, setRating] = useState(1);
   const [reviewBody, setReviewBody] = useState('');
-
-  const onSubmit = () => {
-    postReview({
-      text: reviewBody,
-      rating: rating,
-      collaborators: [],
-      poemId,
-    }).then((res) => {
-      console.log(res);
-    });
-  };
 
   return (
     <div className='m-1'>
@@ -43,7 +38,16 @@ const ReviewForm = ({ poemId }: { poemId: string }) => {
           onChange={(event) => setReviewBody(event.target.value)}
         />
       </div>
-      <button onClick={onSubmit}>Submit</button>
+      <button
+        onClick={() =>
+          onSubmit(reviewBody, rating).then((res) => {
+            setRating(1);
+            setReviewBody('');
+          })
+        }
+      >
+        Submit
+      </button>
     </div>
   );
 };

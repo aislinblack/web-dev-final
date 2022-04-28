@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks';
-import { getReviews } from '../../../services/review-service';
+import { getReviews, postReview } from '../../../services/review-service';
 import ReviewForm from './review-form';
 
 type Review = {
@@ -18,20 +18,33 @@ const Reviews = ({ poemId }: { poemId: string }) => {
       setReviews(res);
     });
   }, [poemId]);
+
+  const onSubmit = (reviewBody: string, rating: number) => {
+    return postReview({
+      text: reviewBody,
+      rating: rating,
+      collaborators: [],
+      poemId,
+    }).then((res) => {
+      console.log(res);
+      setReviews([res, ...(reviews || [])]);
+    });
+  };
+
   console.log(reviews);
 
   return (
     <>
       <div>
         {userInfo.loggedIn && userInfo.user.role === 'critic' && (
-          <ReviewForm poemId={poemId} />
+          <ReviewForm poemId={poemId} onSubmit={onSubmit} />
         )}
         <div>
           <h4>Reviews:</h4>
           {reviews?.map((review) => {
             return (
               <div>
-                {review.rating}⭐ : {review.text} -
+                {'⭐'.repeat(review.rating)} : {review.text} -
                 {review.critics.map((critic) => critic.fullName)}
               </div>
             );

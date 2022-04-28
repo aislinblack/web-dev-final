@@ -10,7 +10,7 @@ const usersSchema = new mongoose.Schema(
     authorProfile: { required: false },
     criticProfile: {
       required: false,
-      type: { organization: String, default: 'Self-Employed' },
+      type: { organization: { type: String, default: 'Self-Employed' } },
     },
     readerProfile: { required: false },
     followers: { type: Number, default: 0 },
