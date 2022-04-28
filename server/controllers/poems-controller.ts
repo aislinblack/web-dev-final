@@ -1,6 +1,6 @@
 import poetrydb from '../services/poetrydb';
 import { isYesterday } from 'date-fns';
-import {
+import poemsDao, {
   createPoem,
   findPoemByAuthorAndTitle,
   findPoemById,
@@ -115,6 +115,17 @@ const createComment = async (req, res) => {
   res.send({ updatedComment });
 };
 
+const getMostPopularPoems = async (req, res) => {
+  const poemCount = req.query.count ? req.query.count : 5;
+  const poemQuery = req.query.userId
+    ? poemsDao.findPoemsNotLikedByUser(req.query.userId)
+    : poemsDao.findAllPoems();
+
+  const poems = await poemQuery.sort({ 'likes.length': 1 }).limit(poemCount);
+
+  res.send(poems);
+};
+
 export default (app) => {
   app.get('/api/authors', getAuthors);
   app.get('/api/poems', searchForPoems);
@@ -122,4 +133,5 @@ export default (app) => {
   app.get('/api/poems/random/:number', findRandomPoems);
   app.get('/api/poems/author/:author/title/:title', findPoem);
   app.put('/api/poems/:pid/comment', createComment);
+  app.get('/api/poems/popular', getMostPopularPoems);
 };

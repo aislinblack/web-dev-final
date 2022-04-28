@@ -12,4 +12,13 @@ export const updatePoem = (pid, poem) =>
 export const findPoemByIdAndUpdate = (pid, poem) =>
   poemsModel.findByIdAndUpdate({ _id: pid }, { $set: poem }, { new: true });
 
-export default { findAllPoems, createPoem, deletePoem, updatePoem };
+export const findPoemsNotLikedByUser = (pid) =>
+  poemsModel.find({ $not: { likes: pid } });
+
+export default {
+  findAllPoems,
+  createPoem,
+  deletePoem,
+  updatePoem,
+  findPoemsNotLikedByUser,
+};
