@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div className='row'>
-      <div className='col-8'>
+      <div className='col'>
         <h1>Poetry of our Own</h1>
         <RandomPoems />
         {userInfo.loggedIn && <Recommendations userId={userInfo.user._id} />}
@@ -30,9 +30,11 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className='col-2'>
-        <WhoToFollowList />
-      </div>
+      {userInfo.loggedIn && (
+        <div className='col-2'>
+          <WhoToFollowList userId={userInfo.user._id} />
+        </div>
+      )}
     </div>
   );
 };

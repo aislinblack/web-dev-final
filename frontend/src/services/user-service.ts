@@ -46,4 +46,10 @@ export const updateUser = (args: any) => {
     });
 };
 
-export const findUsersToFollow = (args: any) => {};
+export const findUsersToFollow = (pid: string) => {
+  return axios
+    .get(`${API_BASE}/api/users`, {
+      params: { limit: 5, excludeUser: pid },
+    })
+    .then((response) => response.data);
+};

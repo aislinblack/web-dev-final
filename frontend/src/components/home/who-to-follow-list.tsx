@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { findUsersToFollow } from '../../services/user-service';
 import { User } from '../../types/user';
 
-const WhoToFollowList = () => {
+const WhoToFollowList = ({ userId }: { userId: string }) => {
   const [loading, setLoading] = useState(true);
   const [followList, setFollowList] = useState<User[]>([]);
+
+  useEffect(() => {
+    findUsersToFollow(userId).then((res) => {
+      setFollowList(res);
+      setLoading(false);
+    });
+  }, [userId]);
+
+  console.log(followList);
 
   if (loading) {
     return (

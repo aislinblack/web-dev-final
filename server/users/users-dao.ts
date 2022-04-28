@@ -6,37 +6,23 @@ const findAllUsers = () => {
 
 const findAllUsersNotFollowedById = (id) => {
   return userModel.find({
-    $and: [{ $not: { followers: id } }, { $not: { _id: id } }],
+    $nor: [{ followers: { $all: [id] } }, { _id: id }],
   });
 };
 
 const findUserById = (id) => {
   return userModel.findById(id);
-  // return userModel.find({_id: id})
 };
 const findUserByEmail = (email) => userModel.findOne({ email });
-// userModel.findOne({email: email})
-// userModel.find({email: email})
 
 const findUsersByRole = (role) => userModel.find({ role });
 
 const findUserByCredentials = (email, password) =>
   userModel.findOne({ email, password });
-// userModel.findOne({email: email, password: password})
+
 const createUser = (user) => userModel.create(user);
 const updateUser = (id, user) =>
-  userModel.updateOne(
-    { _id: id },
-    { $set: user }
-    // {
-    //   $set: {
-    //     email: user.email,
-    //     password: user.password,
-    //     firstName: user.firstName,
-    //     lastName: user.lastName
-    //   }
-    // }
-  );
+  userModel.updateOne({ _id: id }, { $set: user });
 const deleteUser = (id) => userModel.deleteOne({ _id: id });
 
 export default {
