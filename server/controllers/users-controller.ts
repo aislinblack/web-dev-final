@@ -1,8 +1,14 @@
 import userDao from '../users/users-dao';
 
 const findAllUsers = async (req, res) => {
-  const users = await userDao.findAllUsers();
-  res.json(users);
+  const limit = req.query.count ? Number(req.query.count) : null;
+  const excludeUser = req.query.excludeUser;
+  const users = excludeUser
+    ? userDao.findAllUsersNotFollowedById(excludeUser)
+    : userDao.findAllUsers();
+
+  const usersWithLimit = await (limit ? users.limit(limit) : users);
+  res.json(usersWithLimit);
 };
 
 const findUserById = async (req, res) => {

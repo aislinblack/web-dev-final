@@ -3,6 +3,13 @@ import userModel from './users-model';
 const findAllUsers = () => {
   return userModel.find();
 };
+
+const findAllUsersNotFollowedById = (id) => {
+  return userModel.find({
+    $and: [{ $not: { followers: id } }, { $not: { _id: id } }],
+  });
+};
+
 const findUserById = (id) => {
   return userModel.findById(id);
   // return userModel.find({_id: id})
@@ -41,4 +48,5 @@ export default {
   deleteUser: deleteUser,
   updateUser: updateUser,
   findUsersByRole,
+  findAllUsersNotFollowedById,
 };

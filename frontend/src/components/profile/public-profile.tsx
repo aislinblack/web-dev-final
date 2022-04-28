@@ -7,19 +7,6 @@ import { findUserById } from '../../services/user-service';
 
 import { User } from '../../types/user';
 
-const FakeUser = {
-  name: 'Fake User',
-  email: 'fake@gmail.com',
-  photo:
-    'https://i.natgeofe.com/k/aa27e94d-8f1d-447e-9dba-15ac242317b0/meerkat-closeup-log_4x3.jpg',
-  isAuthor: false,
-  showLikedPoems: false,
-  likedPoems: [],
-  dateJoined: new Date(),
-  followers: [],
-  following: [],
-};
-
 const PublicProfile = ({ userId }: { userId: string }) => {
   const [user, setUser] = useState<null | User>(null);
   const loggedInUserInfo = useAppSelector((state) => state.userInfo);

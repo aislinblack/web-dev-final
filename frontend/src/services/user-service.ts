@@ -45,3 +45,5 @@ export const updateUser = (args: any) => {
       return response.data;
     });
 };
+
+export const findUsersToFollow = (args: any) => {};
