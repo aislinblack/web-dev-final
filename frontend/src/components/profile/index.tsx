@@ -13,8 +13,6 @@ const Profile = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
   const navigate = useNavigate();
 
-  console.log(userInfo);
-
   useEffect(() => {
     if (!userId && !userInfo.loggedIn && !userInfo.refreshing) {
       navigate('/uh-oh');

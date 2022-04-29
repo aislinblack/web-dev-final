@@ -25,7 +25,6 @@ export const signIn = async (
   args: { email: string; password: string }
 ) => {
   const result = await login(args);
-  console.log(result);
   dispatch({ type: SIGN_IN, user: result.user });
   return result.user;
 };
@@ -76,8 +75,6 @@ export const updateCritic = async (
   };
 
   const result = await updateUser(updated);
-
-  console.log(result);
 
   dispatch({ type: UPDATE_USER, user: updated });
 };

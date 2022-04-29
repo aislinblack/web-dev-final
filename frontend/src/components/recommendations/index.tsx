@@ -13,7 +13,6 @@ const Recommendations = ({ userId }: { userId: string }) => {
     });
   }, [userId]);
 
-  console.log(recs);
   return (
     <div>
       <h3>You might like:</h3>

@@ -26,12 +26,9 @@ const Reviews = ({ poemId }: { poemId: string }) => {
       collaborators: [],
       poemId,
     }).then((res) => {
-      console.log(res);
       setReviews([res, ...(reviews || [])]);
     });
   };
-
-  console.log(reviews);
 
   return (
     <>

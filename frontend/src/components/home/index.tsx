@@ -31,7 +31,7 @@ const Home = () => {
         )}
       </div>
       {userInfo.loggedIn && (
-        <div className='col-2'>
+        <div className='col-4'>
           <WhoToFollowList userId={userInfo.user._id} />
         </div>
       )}
