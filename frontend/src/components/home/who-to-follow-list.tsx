@@ -1,21 +1,42 @@
 import { useEffect, useState } from 'react';
 import { getMeerkatByFirstName } from '../../data/meerkats';
-import { findUsersToFollow } from '../../services/user-service';
+import { findUsersToFollow, followUser } from '../../services/user-service';
 import { User } from '../../types/user';
 import './index.css';
 
+type UserToFollow = User & {
+  followed: boolean;
+};
+
 const WhoToFollowList = ({ userId }: { userId: string }) => {
   const [loading, setLoading] = useState(true);
-  const [followList, setFollowList] = useState<User[]>([]);
+  const [followList, setFollowList] = useState<UserToFollow[]>([]);
 
   useEffect(() => {
     findUsersToFollow(userId).then((res) => {
-      setFollowList(res);
+      setFollowList(
+        res.map((ahh: User) => {
+          return { ...ahh, followed: false };
+        })
+      );
       setLoading(false);
     });
   }, [userId]);
 
-  console.log(followList);
+  const clickFollow = (pid: string) => {
+    followUser(pid).then((res) => {
+      setFollowList(
+        followList.map((follow) => {
+          if (follow._id === pid) {
+            return { ...follow, followed: true };
+          }
+          return follow;
+        })
+      );
+
+      console.log(res);
+    });
+  };
 
   if (loading) {
     return (
@@ -47,8 +68,16 @@ const WhoToFollowList = ({ userId }: { userId: string }) => {
                   <p className='text-muted mt-0 mb-0'>{follow.role}</p>
                 </div>
                 <div className='col-3'>
-                  <button className='btn btn-primary fw-bold wd-follow-button mt-1'>
-                    Follow
+                  <button
+                    disabled={follow.followed}
+                    className='btn btn-primary fw-bold wd-follow-button mt-1'
+                    onClick={() => clickFollow(follow._id)}
+                  >
+                    {follow.followed ? (
+                      <i className='fa fa-solid fa-check-double'></i>
+                    ) : (
+                      'Follow'
+                    )}
                   </button>
                 </div>
               </div>

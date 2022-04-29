@@ -53,3 +53,11 @@ export const findUsersToFollow = (pid: string) => {
     })
     .then((response) => response.data);
 };
+
+export const followUser = (pid: string) => {
+  return axios
+    .put(`${API_BASE}/api/users/follow/${pid}`, {}, { withCredentials: true })
+    .then((res) => {
+      return res.data;
+    });
+};

@@ -23,6 +23,21 @@ const findUserByCredentials = (email, password) =>
 const createUser = (user) => userModel.create(user);
 const updateUser = (id, user) =>
   userModel.updateOne({ _id: id }, { $set: user });
+
+const updateFollowersList = (personToFollow, personFollowing) => {
+  return userModel.updateOne(
+    { _id: personToFollow },
+    { $push: { followers: personFollowing } }
+  );
+};
+
+const updateFollowingList = (personToFollow, personFollowing) => {
+  return userModel.updateOne(
+    { _id: personFollowing },
+    { $push: { followers: personToFollow } }
+  );
+};
+
 const deleteUser = (id) => userModel.deleteOne({ _id: id });
 
 export default {
@@ -35,4 +50,6 @@ export default {
   updateUser: updateUser,
   findUsersByRole,
   findAllUsersNotFollowedById,
+  updateFollowersList,
+  updateFollowingList,
 };

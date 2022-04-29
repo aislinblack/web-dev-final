@@ -79,7 +79,6 @@ const login = async (req, res) => {
 
   if (profile) {
     req.session['profile'] = profile;
-    console.log(req.session['profile']);
 
     return res.json({ status: 200, user: profile });
   }
@@ -92,8 +91,20 @@ const logout = (req, res) => {
 };
 
 const getLoggedInUser = async (req, res) => {
-  console.log(req.session['profile']);
   res.send(req.session['profile']);
+};
+
+const followUser = async (req, res) => {
+  const personFollowing = req.session.profile;
+  const personToFollow = req.params.id;
+
+  await userDao.updateFollowersList(personToFollow, personFollowing);
+  const updateF = await userDao.updateFollowingList(
+    personToFollow,
+    personFollowing
+  );
+
+  res.send(updateF);
 };
 
 export default (app) => {
@@ -108,4 +119,5 @@ export default (app) => {
   app.put('/api/users', updateUser);
   app.put('/api/users/:id', updateUser);
   app.delete('/api/users/:id', deleteUser);
+  app.put('/api/users/follow/:id', followUser);
 };

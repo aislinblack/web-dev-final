@@ -3,7 +3,6 @@ import usersDao from '../users/users-dao';
 
 const getCriticReviews = async (req, res) => {
   const data = await reviewDao.findReviewsByCritic(req.params.cid);
-  console.log(data);
   res.send(data);
 };
 
