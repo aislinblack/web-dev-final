@@ -16,6 +16,9 @@ import { combineReducers, createStore } from 'redux';
 import userReducer from './reducers/user-reducer';
 import UhOh from './components/uh-oh';
 import EditProfile from './components/profile/edit-profile';
+import Followers from './components/profile/followers';
+import Following from './components/profile/following';
+import PostPoem from './components/postPoem';
 
 const reducer = combineReducers({ userInfo: userReducer });
 const store = createStore(reducer);
@@ -33,7 +36,12 @@ function App() {
           <Routes>
             <Route path='/'>
               <Route path='/' element={<PO3 />}>
-                <Route path='profile/' element={<Profile />}></Route>
+                <Route path='profile'>
+                  <Route path='' element={<Profile />} />
+                  <Route path='followers' element={<Followers />} />
+                  <Route path='following' element={<Following />} />
+                </Route>
+                <Route path='post-poem' element={<PostPoem />} />
                 <Route path='search' element={<Search />}></Route>
                 <Route path='/home' element={<Home />} />
                 <Route path='poem/:author/:title' element={<Poem />}></Route>

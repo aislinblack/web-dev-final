@@ -34,7 +34,7 @@ const updateFollowersList = (personToFollow, personFollowing) => {
 const updateFollowingList = (personToFollow, personFollowing) => {
   return userModel.updateOne(
     { _id: personFollowing },
-    { $push: { followers: personToFollow } }
+    { $push: { following: personToFollow } }
   );
 };
 

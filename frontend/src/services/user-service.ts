@@ -56,8 +56,24 @@ export const findUsersToFollow = (pid: string) => {
 
 export const followUser = (pid: string) => {
   return axios
-    .put(`${API_BASE}/api/users/follow/${pid}`, {}, { withCredentials: true })
+    .put(
+      `${API_BASE}/api/users/followers/${pid}`,
+      {},
+      { withCredentials: true }
+    )
     .then((res) => {
       return res.data;
     });
+};
+
+export const getFollowers = (pid: string) => {
+  return axios
+    .get(`${API_BASE}/api/users/${pid}/followers`)
+    .then((res) => res.data);
+};
+
+export const getFollowing = (pid: string) => {
+  return axios
+    .get(`${API_BASE}/api/users/${pid}/following`)
+    .then((res) => res.data);
 };

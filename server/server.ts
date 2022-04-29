@@ -6,6 +6,7 @@ import usersController from './controllers/users-controller';
 import session from 'express-session';
 import reviewsController from './controllers/reviews-controller';
 import criticsController from './controllers/critics-controller';
+import authorsController from './controllers/authors-controller';
 
 const CONNECTION_STRING =
   process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/poetry';
@@ -29,6 +30,7 @@ app.use(
   })
 );
 
+authorsController(app);
 poetrydbController(app);
 usersController(app);
 reviewsController(app);

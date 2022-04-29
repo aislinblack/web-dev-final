@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { UPDATE_USER } from '../../actions/user-actions';
 import { getMeerkatByFirstName } from '../../data/meerkats';
+import { useAppDispatch } from '../../hooks';
 import { findUsersToFollow, followUser } from '../../services/user-service';
 import { User } from '../../types/user';
 import './index.css';
@@ -11,6 +13,7 @@ type UserToFollow = User & {
 const WhoToFollowList = ({ userId }: { userId: string }) => {
   const [loading, setLoading] = useState(true);
   const [followList, setFollowList] = useState<UserToFollow[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     findUsersToFollow(userId).then((res) => {
@@ -21,7 +24,7 @@ const WhoToFollowList = ({ userId }: { userId: string }) => {
       );
       setLoading(false);
     });
-  }, [userId]);
+  }, [dispatch, userId]);
 
   const clickFollow = (pid: string) => {
     followUser(pid).then((res) => {
@@ -34,7 +37,7 @@ const WhoToFollowList = ({ userId }: { userId: string }) => {
         })
       );
 
-      console.log(res);
+      dispatch({ type: UPDATE_USER, user: res });
     });
   };
 

@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getMeerkatByFirstName } from '../../data/meerkats';
 import { useAppSelector } from '../../hooks';
+import Drafts from '../drafts';
 
 const PrivateProfile = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
@@ -33,10 +34,25 @@ const PrivateProfile = () => {
             'MMMM do yyy GGG'
           )}`}</div>
         )}
-
-        <div>Followers: {userInfo.user.followers.length}</div>
-        <div>Following: {userInfo.user.following.length}</div>
-        <button onClick={() => navigate('/edit-profile')}>Edit</button>
+        <div>
+          <Link to='followers'>
+            Followers: {userInfo.user.followers.length}
+          </Link>
+        </div>
+        <div>
+          <Link to='following'>
+            Following: {userInfo.user.following.length}
+          </Link>
+        </div>
+        <button
+          className='btn btn-primary rounded-pill mt-2'
+          onClick={() => navigate('/edit-profile')}
+        >
+          Edit
+        </button>
+        {userInfo.user.role === 'author' && (
+          <Drafts authorId={userInfo.user._id} />
+        )}
       </div>
     </div>
   );

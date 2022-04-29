@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks';
 import { findUserById } from '../../services/user-service';
 
 import { User } from '../../types/user';
+import Drafts from '../drafts';
 
 const PublicProfile = ({ userId }: { userId: string }) => {
   const [user, setUser] = useState<null | User>(null);
@@ -47,6 +48,8 @@ const PublicProfile = ({ userId }: { userId: string }) => {
 
         <div>Followers: {user.followers.length}</div>
         <div>Following: {user.following.length}</div>
+
+        {user.role === 'author' && <Drafts authorId={user._id} />}
       </div>
     </div>
   );

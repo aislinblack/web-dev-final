@@ -98,13 +98,47 @@ const followUser = async (req, res) => {
   const personFollowing = req.session.profile;
   const personToFollow = req.params.id;
 
-  await userDao.updateFollowersList(personToFollow, personFollowing);
+  const update = await userDao.updateFollowersList(
+    personToFollow,
+    personFollowing
+  );
+  //console.log()
   const updateF = await userDao.updateFollowingList(
     personToFollow,
     personFollowing
   );
+  const updateSession = await userDao.findUserById(personFollowing);
+  res.send(updateSession);
+};
 
-  res.send(updateF);
+const getFollowers = async (req, res) => {
+  const pid = req.params.pid;
+  const allUsers = await userDao.findAllUsers().exec();
+
+  const myUser = allUsers.find((user) => user._id.toString() === pid)!;
+  const myFollowerIds = myUser.followers;
+  console.log(myFollowerIds);
+  const followers = allUsers.filter((u) => {
+    return myFollowerIds.includes(u._id);
+  });
+
+  res.send(followers);
+};
+
+const getFollowing = async (req, res) => {
+  const pid = req.params.pid;
+
+  const allUsers = await userDao.findAllUsers().exec();
+
+  const myUser = allUsers.find((user) => user._id.toString() === pid)!;
+
+  const myFollowingIds = myUser.following;
+
+  const following = allUsers.filter((u) => {
+    return myFollowingIds.includes(u._id);
+  });
+
+  res.send(following);
 };
 
 export default (app) => {
@@ -119,5 +153,7 @@ export default (app) => {
   app.put('/api/users', updateUser);
   app.put('/api/users/:id', updateUser);
   app.delete('/api/users/:id', deleteUser);
-  app.put('/api/users/follow/:id', followUser);
+  app.put('/api/users/followers/:id', followUser);
+  app.get('/api/users/:pid/followers', getFollowers);
+  app.get('/api/users/:pid/following', getFollowing);
 };

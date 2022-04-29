@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 
 const NavigationSidebar = ({ active = 'home' }) => {
+  const userInfo = useAppSelector((state) => state.userInfo);
+
   return (
     <>
       <div className='list-group'>
@@ -32,6 +35,19 @@ const NavigationSidebar = ({ active = 'home' }) => {
           <i className='fa fa-solid fa-user'></i>
           <span className='d-none d-xl-block d-xxl-block ms-2'>Profile</span>
         </Link>
+        {userInfo.loggedIn && userInfo.user.role === 'author' && (
+          <Link
+            className={`list-group-item list-group-item-action d-flex align-items-center ${
+              active === 'post-poem' && 'active'
+            }`}
+            to='/post-poem'
+          >
+            <i className='fa fa-solid fa-pen'></i>
+            <span className='d-none d-xl-block d-xxl-block ms-2'>
+              Post Poem
+            </span>
+          </Link>
+        )}
         <Link
           className={`list-group-item list-group-item-action d-flex align-items-center ${
             active === 'privacy' && 'active'
