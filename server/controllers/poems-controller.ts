@@ -132,8 +132,10 @@ const getMostPopularPoems = async (req, res) => {
 
 const likePoem = async (req, res) => {
   const pid = req.params.pid;
-  const userId = req.query.userId;
-  const lookupUser = await usersDao.findUserById(userId);
+  const userId = req.query.userId || req.session.profile._id;
+  console.log(userId);
+  const lookupUser = await usersDao.findUserById(userId).exec();
+  console.log(lookupUser);
 
   const update = await poemsDao.likePoem(pid, lookupUser._id);
 

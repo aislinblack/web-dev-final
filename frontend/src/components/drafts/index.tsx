@@ -16,7 +16,6 @@ const Drafts = ({ authorId }: { authorId: string }) => {
       setDrafts(res);
     });
   }, [authorId]);
-  console.log(drafts);
 
   return (
     <div className='d-block '>
