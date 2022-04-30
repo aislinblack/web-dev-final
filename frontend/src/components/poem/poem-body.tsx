@@ -6,9 +6,11 @@ import { likepoem } from '../../services/poetry-service';
 const PoemBody = ({
   poem,
   sendComment,
+  ratings,
 }: {
   poem: PoemType;
   sendComment: (comment: string) => void;
+  ratings: number[];
 }) => {
   const userInfo = useAppSelector((state) => state.userInfo);
   const [comment, setComment] = useState('');
@@ -53,7 +55,7 @@ const PoemBody = ({
         </div>
         <div className='col'>
           <i className='fa fa-solid fa-star me-1' style={{ color: 'gold' }}></i>
-          {calculateAverageRating(poem.ratings)}
+          {calculateAverageRating(ratings)}
         </div>
       </div>
       {userInfo.loggedIn && (

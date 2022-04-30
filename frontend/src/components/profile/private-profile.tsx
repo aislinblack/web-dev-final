@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getMeerkatByFirstName } from '../../data/meerkats';
 import { useAppSelector } from '../../hooks';

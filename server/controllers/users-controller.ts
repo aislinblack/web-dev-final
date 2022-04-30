@@ -98,16 +98,11 @@ const followUser = async (req, res) => {
   const personFollowing = req.session.profile;
   const personToFollow = req.params.id;
 
-  const update = await userDao.updateFollowersList(
-    personToFollow,
-    personFollowing
-  );
-  //console.log()
-  const updateF = await userDao.updateFollowingList(
-    personToFollow,
-    personFollowing
-  );
+  await userDao.updateFollowersList(personToFollow, personFollowing);
+
+  await userDao.updateFollowingList(personToFollow, personFollowing);
   const updateSession = await userDao.findUserById(personFollowing);
+  req.session.profile = updateSession;
   res.send(updateSession);
 };
 

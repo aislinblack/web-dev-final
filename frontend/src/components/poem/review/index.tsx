@@ -3,44 +3,39 @@ import { useAppSelector } from '../../../hooks';
 import { getReviews, postReview } from '../../../services/review-service';
 import ReviewForm from './review-form';
 
-type Review = {
+export type ReviewType = {
   text: string;
   critics: { fullName: string }[];
   rating: number;
+  _id: string;
 };
 
-const Reviews = ({ poemId }: { poemId: string }) => {
+const Reviews = ({
+  reviews,
+  submitReview,
+  poemId,
+}: {
+  reviews: ReviewType[];
+  poemId: string;
+  submitReview: (
+    reviewBody: string,
+    rating: number,
+    collaborators?: string[]
+  ) => Promise<void>;
+}) => {
   const userInfo = useAppSelector((state) => state.userInfo);
-  const [reviews, setReviews] = useState<null | Review[]>(null);
-
-  useEffect(() => {
-    getReviews({ poem: poemId }).then((res) => {
-      setReviews(res);
-    });
-  }, [poemId]);
-
-  const onSubmit = (reviewBody: string, rating: number) => {
-    return postReview({
-      text: reviewBody,
-      rating: rating,
-      collaborators: [],
-      poemId,
-    }).then((res) => {
-      setReviews([res, ...(reviews || [])]);
-    });
-  };
 
   return (
     <>
       <div>
         {userInfo.loggedIn && userInfo.user.role === 'critic' && (
-          <ReviewForm poemId={poemId} onSubmit={onSubmit} />
+          <ReviewForm poemId={poemId} onSubmit={submitReview} />
         )}
         <div>
           <h4>Reviews:</h4>
           {reviews?.map((review) => {
             return (
-              <div>
+              <div key={review._id}>
                 {'⭐'.repeat(review.rating)} : {review.text} -
                 {review.critics.map((critic) => critic.fullName)}
               </div>

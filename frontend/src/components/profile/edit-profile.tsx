@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { updateAuthor, updateCritic } from '../../actions/user-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
