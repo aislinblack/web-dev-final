@@ -9,7 +9,7 @@ type CriticProfile = {
 
 type AuthorProfile = {
   role: 'author';
-  authorProfile: {};
+  authorProfile: { inspirations: string[] };
 } & GeneralAttributes;
 
 type ReaderProfile = {

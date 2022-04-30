@@ -44,6 +44,14 @@ const PrivateProfile = () => {
             Following: {userInfo.user.following.length}
           </Link>
         </div>
+        {userInfo.user.role === 'author' && (
+          <div>
+            Interests:{' '}
+            {userInfo.user.authorProfile.inspirations.length === 0
+              ? 'None'
+              : userInfo.user.authorProfile.inspirations.join()}
+          </div>
+        )}
         <button
           className='btn btn-primary rounded-pill mt-2'
           onClick={() => navigate('/edit-profile')}

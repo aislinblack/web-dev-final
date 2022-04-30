@@ -20,6 +20,13 @@ const EditProfile = () => {
       userInfo.user.criticProfile.organization) ||
       ''
   );
+  const [newInspo, setNewInspo] = useState('');
+  const [inspirations, setInspirations] = useState(
+    (userInfo.loggedIn &&
+      userInfo.user.role === 'author' &&
+      userInfo.user.authorProfile.inspirations) ||
+      []
+  );
 
   const saveProfile = () => {
     if (userInfo.loggedIn && userInfo.user.role === 'critic') {
@@ -28,6 +35,7 @@ const EditProfile = () => {
         lastName: newLastName,
         organization: newAffiliation,
       }).then(() => navigate('/profile'));
+    } else if (userInfo.loggedIn && userInfo.user.role === 'author') {
     }
   };
 
@@ -62,7 +70,64 @@ const EditProfile = () => {
           <label htmlFor='affiliation'>Affiliation</label>
         </form>
       )}
-      <button onClick={saveProfile}>Save Profile</button>
+      {userInfo.loggedIn && userInfo.user.role === 'author' && (
+        <div>
+          <label>Inspirations: </label>
+          {inspirations.map((inspo, index) => (
+            <div className='row' key={index}>
+              <div className='col'>
+                <form className='form-floating mb-2'>
+                  <input
+                    id={String(index)}
+                    className='form-control'
+                    value={inspo}
+                    disabled
+                  />
+                </form>
+              </div>
+              <div className='col'>
+                <button
+                  className='btn btn-danger'
+                  onClick={() => {
+                    setInspirations(
+                      inspirations.filter((ins) => ins === inspo)
+                    );
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className='row'>
+            <div className='col'>
+              <form className='form-floating mb-2'>
+                <input
+                  id='newInspo'
+                  className='form-control'
+                  value={newInspo}
+                  onChange={(event) => setNewInspo(event.target.value)}
+                ></input>
+                <label htmlFor='newInspo'>New</label>
+              </form>
+            </div>
+            <div className='col'>
+              <button
+                className='btn btn-info'
+                onClick={() => {
+                  setInspirations([...inspirations, newInspo]);
+                  setNewInspo('');
+                }}
+              >
+                Add Inspiration
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <button className='mt-2 btn btn-primary' onClick={saveProfile}>
+        Save Profile
+      </button>
     </div>
   );
 };
