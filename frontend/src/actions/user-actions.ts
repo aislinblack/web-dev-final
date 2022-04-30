@@ -1,6 +1,7 @@
 import { UserInfo } from 'os';
 import { stringify } from 'querystring';
 import { Dispatch } from 'redux';
+import { AppDispatch } from '../App';
 import {
   findLoggedInUser,
   login,
@@ -74,7 +75,30 @@ export const updateCritic = async (
     criticProfile: { organization },
   };
 
-  const result = await updateUser(updated);
+  await updateUser(updated);
 
+  dispatch({ type: UPDATE_USER, user: updated });
+};
+
+export const updateAuthor = async (
+  dispatch: AppDispatch,
+  user: User,
+  {
+    firstName,
+    lastName,
+    inspirations,
+  }: { firstName: string; lastName: string; inspirations: string[] }
+) => {
+  if (user.role !== 'author') {
+    return console.error('Cannot update non author');
+  }
+
+  const updated: User = {
+    ...user,
+    firstName,
+    lastName,
+    authorProfile: { inspirations },
+  };
+  await updateUser(updated);
   dispatch({ type: UPDATE_USER, user: updated });
 };

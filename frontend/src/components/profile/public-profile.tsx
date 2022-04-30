@@ -53,7 +53,7 @@ const PublicProfile = ({ userId }: { userId: string }) => {
             Interests:{' '}
             {user.authorProfile.inspirations.length === 0
               ? 'None'
-              : user.authorProfile.inspirations.join()}
+              : user.authorProfile.inspirations.join(', ')}
           </div>
         )}
         {user.role === 'author' && <Drafts authorId={user._id} />}

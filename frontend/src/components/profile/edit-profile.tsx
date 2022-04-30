@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { updateCritic } from '../../actions/user-actions';
+import { updateAuthor, updateCritic } from '../../actions/user-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const EditProfile = () => {
@@ -36,6 +36,11 @@ const EditProfile = () => {
         organization: newAffiliation,
       }).then(() => navigate('/profile'));
     } else if (userInfo.loggedIn && userInfo.user.role === 'author') {
+      updateAuthor(dispatch, userInfo.user, {
+        firstName: newFirstName,
+        lastName: newLastName,
+        inspirations,
+      }).then(() => navigate('/profile'));
     }
   };
 

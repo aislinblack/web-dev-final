@@ -49,7 +49,7 @@ const PrivateProfile = () => {
             Interests:{' '}
             {userInfo.user.authorProfile.inspirations.length === 0
               ? 'None'
-              : userInfo.user.authorProfile.inspirations.join()}
+              : userInfo.user.authorProfile.inspirations.join(', ')}
           </div>
         )}
         <button
