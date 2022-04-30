@@ -53,39 +53,37 @@ const WhoToFollowList = ({ userId }: { userId: string }) => {
     <div className='list-group'>
       {followList.map((follow) => {
         return (
-          <>
-            <li className='list-group-item'>
-              <div className='row me-1'>
-                <div className='col-2'>
-                  <img
-                    className='wd-avatar'
-                    src={getMeerkatByFirstName(follow.email)}
-                    alt=''
-                  />
-                </div>
-                <div className='col-7'>
-                  <p className='fw-bold mb-0'>
-                    {follow.firstName} {follow.lastName}
-                    <i className='fa fa-certificate'></i>
-                  </p>
-                  <p className='text-muted mt-0 mb-0'>{follow.role}</p>
-                </div>
-                <div className='col-3'>
-                  <button
-                    disabled={follow.followed}
-                    className='btn btn-primary fw-bold wd-follow-button mt-1'
-                    onClick={() => clickFollow(follow._id)}
-                  >
-                    {follow.followed ? (
-                      <i className='fa fa-solid fa-check-double'></i>
-                    ) : (
-                      'Follow'
-                    )}
-                  </button>
-                </div>
+          <li key={follow._id} className='list-group-item'>
+            <div className='row me-1'>
+              <div className='col-2'>
+                <img
+                  className='wd-avatar'
+                  src={getMeerkatByFirstName(follow.email)}
+                  alt=''
+                />
               </div>
-            </li>
-          </>
+              <div className='col-7'>
+                <p className='fw-bold mb-0'>
+                  {follow.firstName} {follow.lastName}
+                  <i className='fa fa-certificate'></i>
+                </p>
+                <p className='text-muted mt-0 mb-0'>{follow.role}</p>
+              </div>
+              <div className='col-3'>
+                <button
+                  disabled={follow.followed}
+                  className='btn btn-primary fw-bold wd-follow-button mt-1'
+                  onClick={() => clickFollow(follow._id)}
+                >
+                  {follow.followed ? (
+                    <i className='fa fa-solid fa-check-double'></i>
+                  ) : (
+                    'Follow'
+                  )}
+                </button>
+              </div>
+            </div>
+          </li>
         );
       })}
     </div>

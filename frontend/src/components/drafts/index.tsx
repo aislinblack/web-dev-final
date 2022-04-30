@@ -6,6 +6,7 @@ export type Draft = {
   text: string;
   likes: string[];
   author: string;
+  _id: string;
 };
 
 const Drafts = ({ authorId }: { authorId: string }) => {
@@ -22,7 +23,7 @@ const Drafts = ({ authorId }: { authorId: string }) => {
       <h4 className='mt-2'>Drafts</h4>
       {drafts.map((draft) => {
         return (
-          <div className='mb-5 border rounded text-left'>
+          <div key={draft._id} className='mb-5 border rounded text-left'>
             <h5>{draft.title}</h5>
             <div>{draft.text}</div>
             <span>

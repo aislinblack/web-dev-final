@@ -27,7 +27,7 @@ const RandomPoems = () => {
       <ul>
         {poems.map((poem) => {
           return (
-            <div className='row'>
+            <div key={poem._id} className='row'>
               <div className='col'>{poem.author}</div>
               <div className='col'>{poem.title}</div>
               <div className='col'>{poem.likes.length}</div>

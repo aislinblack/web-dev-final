@@ -23,16 +23,16 @@ const PoemBody = ({
         ) / array.length;
   };
 
+  const didUserLikePoem =
+    userInfo.loggedIn && (poem.likes.includes(userInfo.user._id) || liked);
+
   const likePoem = () => {
-    if (userInfo.loggedIn) {
+    if (userInfo.loggedIn && !didUserLikePoem) {
       likepoem(poem._id).then((res) => {
         setLiked(true);
       });
     }
   };
-
-  const didUserLikePoem =
-    userInfo.loggedIn && (poem.likes.includes(userInfo.user._id) || liked);
 
   return (
     <>
