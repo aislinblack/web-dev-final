@@ -26,6 +26,17 @@ const NavigationSidebar = ({ active = 'home' }) => {
           <i className='fa fa-solid fa-search'></i>
           <span className='d-none d-xl-block d-xxl-block ms-2'>Search</span>
         </Link>
+        {userInfo.loggedIn && (
+          <Link
+            className={`list-group-item list-group-item-action d-flex align-items-center ${
+              active === 'feed' && 'active'
+            }`}
+            to='/feed'
+          >
+            <i className='fa fa-solid fa-book'></i>
+            <span className='d-none d-xl-block d-xxl-block ms-2'>Feed</span>
+          </Link>
+        )}
         <Link
           className={`list-group-item list-group-item-action d-flex align-items-center ${
             active === 'profile' && 'active'

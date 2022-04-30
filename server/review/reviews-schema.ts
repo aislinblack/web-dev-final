@@ -6,6 +6,7 @@ const schema = new Schema(
     text: String,
     rating: Number,
     poemId: { type: Schema.Types.ObjectId, ref: 'PoemModel' },
+    datePosted: { type: Date, required: false },
   },
   { collection: 'reviews' }
 );

@@ -5,7 +5,6 @@ import poemsDao, {
   findPoemByAuthorAndTitle,
   findPoemById,
   findPoemByIdAndUpdate,
-  updatePoem,
 } from '../poems/poems-dao';
 import usersDao from '../users/users-dao';
 import reviewDao from '../review/review-dao';

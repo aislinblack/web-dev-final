@@ -19,6 +19,7 @@ import EditProfile from './components/profile/edit-profile';
 import Followers from './components/profile/followers';
 import Following from './components/profile/following';
 import PostPoem from './components/postPoem';
+import Feed from './components/feed';
 
 const reducer = combineReducers({ userInfo: userReducer });
 const store = createStore(reducer);
@@ -49,6 +50,7 @@ function App() {
                 <Route path='/' element={<Home />}></Route>
                 <Route path='profile/:uid' element={<Profile />}></Route>
                 <Route path='edit-profile' element={<EditProfile />} />
+                <Route path='feed' element={<Feed />} />
               </Route>
               <Route path='welcome/' element={<Welcome />}></Route>
               <Route path='login/' element={<Login />}></Route>
