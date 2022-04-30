@@ -10,7 +10,7 @@ const schema = new Schema(
     },
     draftId: { type: Schema.Types.ObjectId, ref: 'DraftModel' },
     title: String,
-    datePosted: { type: Date, required: false },
+    datePosted: { type: Date },
   },
   { collection: 'drafts' }
 );

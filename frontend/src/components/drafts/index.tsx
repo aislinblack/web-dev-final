@@ -7,6 +7,8 @@ export type Draft = {
   likes: string[];
   author: string;
   _id: string;
+  datePosted: string;
+  authorName: string;
 };
 
 const Drafts = ({ authorId }: { authorId: string }) => {

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { PoemType } from '..';
 import { useAppSelector } from '../../../hooks';
-import { getReviews, postReview } from '../../../services/review-service';
 import ReviewForm from './review-form';
 
 export type ReviewType = {
@@ -8,6 +7,9 @@ export type ReviewType = {
   critics: { fullName: string }[];
   rating: number;
   _id: string;
+  datePosted: string;
+  criticNames: string[];
+  poem?: PoemType;
 };
 
 const Reviews = ({

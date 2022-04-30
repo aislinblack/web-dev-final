@@ -37,7 +37,7 @@ const postReview = async (req, res) => {
   const data = await reviewDao.createReview(newReview);
   const critics = await findCritics(newReview.critics);
 
-  res.send({ ...data._doc, critics });
+  res.send({ ...data._doc, critics, datePosted: new Date() });
 };
 
 const findCritics = (critics: string[]) => {
