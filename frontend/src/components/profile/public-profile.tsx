@@ -50,7 +50,7 @@ const PublicProfile = ({ userId }: { userId: string }) => {
         <div>Following: {user.following.length}</div>
         {user.role === 'author' && (
           <div>
-            Interests:{' '}
+            Inspirations:
             {user.authorProfile.inspirations.length === 0
               ? 'None'
               : user.authorProfile.inspirations.join(', ')}

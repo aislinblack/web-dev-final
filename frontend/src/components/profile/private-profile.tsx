@@ -46,7 +46,7 @@ const PrivateProfile = () => {
         </div>
         {userInfo.user.role === 'author' && (
           <div>
-            Interests:{' '}
+            Inspirations:{' '}
             {userInfo.user.authorProfile.inspirations.length === 0
               ? 'None'
               : userInfo.user.authorProfile.inspirations.join(', ')}

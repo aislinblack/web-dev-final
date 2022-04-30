@@ -28,6 +28,23 @@ const EditProfile = () => {
       []
   );
 
+  useEffect(() => {
+    if (userInfo.loggedIn) {
+      setFirstName(userInfo.user.firstName);
+      setLastName(userInfo.user.lastName);
+      setInspirations(
+        (userInfo.user.role === 'author' &&
+          userInfo.user.authorProfile.inspirations) ||
+          []
+      );
+      setAffiliation(
+        (userInfo.user.role === 'critic' &&
+          userInfo.user.criticProfile.organization) ||
+          ''
+      );
+    }
+  }, [userInfo]);
+
   const saveProfile = () => {
     if (userInfo.loggedIn && userInfo.user.role === 'critic') {
       updateCritic(dispatch, userInfo.user, {
@@ -94,9 +111,10 @@ const EditProfile = () => {
                 <button
                   className='btn btn-danger'
                   onClick={() => {
-                    setInspirations(
-                      inspirations.filter((ins) => ins === inspo)
-                    );
+                    const inspos = inspirations.slice();
+                    const filtered = inspos.filter((ins) => ins !== inspo);
+
+                    setInspirations(filtered);
                   }}
                 >
                   Remove
