@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { PoemType } from '.';
+import { calculateAverageRating } from '../../helpers/averate-rating';
 import { useAppSelector } from '../../hooks';
 import { likepoem } from '../../services/poetry-service';
 
@@ -15,15 +16,6 @@ const PoemBody = ({
   const userInfo = useAppSelector((state) => state.userInfo);
   const [comment, setComment] = useState('');
   const [liked, setLiked] = useState(false);
-
-  const calculateAverageRating = (array: number[]) => {
-    return !array || array.length === 0
-      ? 0
-      : array.reduce(
-          (previousValue, currentValue) => previousValue + currentValue,
-          0
-        ) / array.length;
-  };
 
   const didUserLikePoem =
     userInfo.loggedIn && (poem.likes.includes(userInfo.user._id) || liked);

@@ -12,7 +12,6 @@ const schema = new Schema(
         comment: String,
       },
     ],
-    ratings: [Number],
   },
   { collection: 'poems' }
 );

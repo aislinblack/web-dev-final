@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { calculateAverageRating } from '../../helpers/averate-rating';
 import { findDailyRandomPoems } from '../../services/poetry-service';
+import { PoemType } from '../poem';
 
 const RandomPoems = () => {
   const [loading, setLoading] = useState(true);
-  const [poems, setPoems] = useState<Record<string, string>[]>([]);
+  const [poems, setPoems] = useState<PoemType[]>([]);
 
   useEffect(() => {
     findDailyRandomPoems().then((res) => {
@@ -31,7 +33,7 @@ const RandomPoems = () => {
               <div className='col'>{poem.author}</div>
               <div className='col'>{poem.title}</div>
               <div className='col'>{poem.likes.length}</div>
-              <div className='col'>{poem.rating}</div>
+              <div className='col'>{calculateAverageRating(poem.ratings)}</div>
               <div className='col'>
                 <Link
                   to={`/poem/${encodeURIComponent(

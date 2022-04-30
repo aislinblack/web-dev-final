@@ -8,6 +8,7 @@ import poemsDao, {
   updatePoem,
 } from '../poems/poems-dao';
 import usersDao from '../users/users-dao';
+import reviewDao from '../review/review-dao';
 
 const getAuthors = async (req, res) => {
   const data = await poetrydb.findAuthors();
@@ -51,10 +52,30 @@ const findRandomPoemsDaily = async (req, res) => {
       })
     );
 
+    const getPoemRatings = await Promise.all(
+      sanitizedPoems.map(async (rand) => {
+        const reviews = await reviewDao.findReviewsByPoem(rand._id).exec();
+        const poem = rand._doc;
+        const ratings = reviews.map((re) => re.rating);
+        return { ...poem, ratings };
+      })
+    );
+
+    randomPoems = getPoemRatings;
     lastRefresh = new Date();
-    return res.send(sanitizedPoems);
+    return res.send(getPoemRatings);
+  } else {
+    const getPoemRatings = await Promise.all(
+      randomPoems.map(async (rand) => {
+        const refreshPoem = (await poemsDao.findPoemById(rand._id).exec())._doc;
+        const reviews = await reviewDao.findReviewsByPoem(rand._id).exec();
+        const ratings = reviews.map((re) => re.rating);
+        return { ...refreshPoem, ratings };
+      })
+    );
+
+    res.send(getPoemRatings);
   }
-  res.send(randomPoems);
 };
 
 const findRandomPoems = async (req, res) => {

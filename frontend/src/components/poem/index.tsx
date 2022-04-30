@@ -11,8 +11,8 @@ export type PoemType = {
   author: string;
   title: string;
   likes: any[];
-  ratings: number[];
   comments: { postedByName: string; comment: string }[];
+  ratings: number[];
 };
 
 const Poem = () => {
