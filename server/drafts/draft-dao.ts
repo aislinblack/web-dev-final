@@ -10,10 +10,14 @@ export const updateDraft = (did, draft) =>
 export const findDraftByAuthorId = (aid: string) =>
   draftModel.find({ author: aid });
 
+const likeDraft = (pid, userId) =>
+  draftModel.updateOne({ _id: pid }, { $push: { likes: userId } });
+
 export default {
   findAllDrafts,
   createDraft,
   deleteDraft,
   updateDraft,
   findDraftByAuthorId,
+  likeDraft,
 };

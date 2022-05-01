@@ -28,23 +28,27 @@ const Signup = () => {
   return (
     <div className='wd-center'>
       <h3>Signup</h3>
-      <p>
-        First Name:
+      <form className='form-floating mb-2'>
         <input
+          className='form-control'
+          id='firstName'
           value={firstName}
           onChange={(event) => setFirstName(event.target.value)}
         />
-      </p>
-      <p>
-        Last Name:
+        <label htmlFor='firstName'>First Name</label>
+      </form>
+      <form className='form-floating mb-2'>
         <input
+          className='form-control'
+          id='lastName'
           value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
-      </p>
-      <p>
-        Role:
+        <label htmlFor='lastName'>Last Name</label>
+      </form>
+      <form className='form-floating mb-2'>
         <select
+          className='form-control'
           value={role}
           onChange={(event) => {
             if (
@@ -61,23 +65,30 @@ const Signup = () => {
           <option value='author'>Author</option>
           <option value='critic'>Critic</option>
         </select>
-      </p>
-      <p>
-        Email:
+        <label htmlFor='role'>Role</label>
+      </form>
+      <form className='form-floating mb-2'>
         <input
+          className='form-control'
+          id='email'
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-      </p>
-      <p>
-        Password:
+        <label htmlFor='email'>Email</label>
+      </form>
+      <form className='form-floating mb-2'>
         <input
-          value={password}
+          className='form-control'
           type='password'
+          id='password'
+          value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-      </p>
-      <button onClick={() => signup()}>Signup</button>
+        <label htmlFor='password'>Password</label>
+      </form>
+      <button className='btn btn-primary rounded-pill' onClick={() => signup()}>
+        Signup
+      </button>
     </div>
   );
 };

@@ -3,7 +3,8 @@ import reviewModel from './review-model';
 export const findAllReviews = () => reviewModel.find();
 export const findReviewsByCritic = (criticId) =>
   reviewModel.find({ critics: criticId });
-export const findReviewsByPoem = (poemId) => reviewModel.find({ poemId });
+export const findReviewsByPoem = (poemId) =>
+  reviewModel.find({ poemId: poemId });
 export const findReviewById = (id: string) => reviewModel.findById(id);
 export const createReview = (review) => reviewModel.create(review);
 export const deleteReview = (rid) => reviewModel.deleteOne({ _id: rid });

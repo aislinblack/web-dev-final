@@ -5,6 +5,7 @@ const getReviews = async (req, res) => {
   let data = [];
   if (req.query.poem) {
     data = await reviewDao.findReviewsByPoem(req.query.poem);
+    console.log('reviews', data);
   } else {
     data = await reviewDao.findAllReviews();
   }

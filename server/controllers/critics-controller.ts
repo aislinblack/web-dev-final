@@ -5,8 +5,6 @@ import usersDao from '../users/users-dao';
 const getCriticReviews = async (req, res) => {
   const data = await reviewDao.findReviewsByCritic(req.params.cid).exec();
 
-  const critic = await usersDao.findUserById(req.params.cid);
-
   const dataWithStuff = await Promise.all(
     data.map(async (review) => {
       const reviewPoemId = review.poemId;
@@ -29,7 +27,15 @@ const getCriticReviews = async (req, res) => {
 };
 
 const getCritics = async (req, res) => {
-  const data = await usersDao.findUsersByRole('critic');
+  let data = await usersDao.findUsersByRole('critic');
+  console.log(data);
+  console.log(req.query.organization);
+  if (req.query.organization) {
+    console.log(data);
+    data = data.filter(
+      (critic) => critic.criticProfile?.organization === req.query.organization
+    );
+  }
 
   res.send(
     data.map((critic) => {

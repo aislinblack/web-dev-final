@@ -11,3 +11,7 @@ const instance = axios.create({
 export const getReviewsByCritic = (criticId: string) => {
   return instance.get(`${criticId}/reviews`).then((res) => res.data);
 };
+
+export const getCriticsByOrganization = (organization: string) => {
+  return instance.get('', { params: { organization } }).then((res) => res.data);
+};

@@ -56,19 +56,23 @@ const PoemBody = ({
             value={comment}
             onChange={(event) => setComment(event.target.value)}
           />
-          <button
-            onClick={() => {
-              sendComment(comment);
-              setComment('');
-            }}
-          >
-            Comment!
-          </button>
+          <div>
+            <button
+              className='btn btn-primary rounded-pill'
+              onClick={() => {
+                sendComment(comment);
+                setComment('');
+              }}
+            >
+              Comment!
+            </button>
+          </div>
         </div>
       )}
       {poem.comments.reverse().map((comment, index) => (
         <div key={index}>
-          {comment.comment} - {comment.postedByName}
+          <div className='mt-3 text-white'>{comment.comment}</div>
+          <div>Posted by {comment.postedByName}</div>
         </div>
       ))}
     </>

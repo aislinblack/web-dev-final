@@ -20,10 +20,16 @@ const Search = () => {
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
       />
-      <button onClick={() => searchForPoems(searchTerm, '')}>
+      <button
+        className='btn btn-primary rounded-pill ms-2'
+        onClick={() => searchForPoems(searchTerm, '')}
+      >
         Search By Title!
       </button>
-      <button onClick={() => searchForPoems('', searchTerm)}>
+      <button
+        className='btn btn-primary rounded-pill ms-2'
+        onClick={() => searchForPoems('', searchTerm)}
+      >
         Search By Author!
       </button>
       <div>

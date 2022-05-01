@@ -35,22 +35,30 @@ const Login = () => {
   return (
     <div className='wd-center'>
       <h3>Login</h3>
-      <p>
-        Email:
+      <form className='form-floating mb-2'>
         <input
+          className='form-control'
+          id='email'
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-      </p>
-      <p>
-        Password:
+        <label htmlFor='email'>Email</label>
+      </form>
+      <form className='form-floating mb-2'>
         <input
+          className='form-control'
           type='password'
+          id='password'
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-      </p>
-      <button disabled={loading} onClick={() => logIn()}>
+        <label htmlFor='password'>Password</label>
+      </form>
+      <button
+        className='btn btn-primary rounded-pill'
+        disabled={loading}
+        onClick={() => logIn()}
+      >
         {loading ? <i className='fas fa-spinner fa-pulse fa-3x' /> : 'Login'}
       </button>
     </div>

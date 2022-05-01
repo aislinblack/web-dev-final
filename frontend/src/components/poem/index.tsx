@@ -32,11 +32,15 @@ const Poem = () => {
     setPoem({ ...res.updatedComment, lines: poem.lines });
   };
 
-  const onSubmit = (reviewBody: string, rating: number) => {
+  const onSubmit = (
+    reviewBody: string,
+    rating: number,
+    collaborators: string[]
+  ) => {
     return postReview({
       text: reviewBody,
       rating: rating,
-      collaborators: [],
+      collaborators,
       poemId: poem!._id,
     }).then((res) => {
       setReviews([res, ...(reviews || [])]);

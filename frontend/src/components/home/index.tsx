@@ -15,9 +15,14 @@ const Home = () => {
         <RandomPoems />
         {userInfo.loggedIn && <Recommendations userId={userInfo.user._id} />}
         <div>
-          <h3>
+          <h3 className='mt-2'>
             Find a poem?
-            <button onClick={() => navigate('search')}>Search!</button>
+            <button
+              className='btn btn-primary rounded-pill btn-lg ms-2'
+              onClick={() => navigate('search')}
+            >
+              Search!
+            </button>
           </h3>
         </div>
         {!userInfo.loggedIn && (

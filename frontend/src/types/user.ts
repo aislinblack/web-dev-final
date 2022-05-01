@@ -1,7 +1,8 @@
 export type User = CriticProfile | AuthorProfile | ReaderProfile;
 
-type CriticProfile = {
+export type CriticProfile = {
   role: 'critic';
+  fullName?: string;
   criticProfile: {
     organization: string;
   };
