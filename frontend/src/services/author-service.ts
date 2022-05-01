@@ -14,3 +14,11 @@ export const postPoemForAuthor = (aid: string, text: string, title: string) => {
 export const getDrafts = (aid: string) => {
   return axios.get(`${AUTHOR_API}/${aid}/drafts`).then((res) => res.data);
 };
+
+export const getAuthors = () => {
+  return axios.get(`${AUTHOR_API}`).then((res) => res.data);
+};
+
+export const getAuthorById = (aid: string) => {
+  return axios.get(`${AUTHOR_API}/${aid}`).then((res) => res.data);
+};

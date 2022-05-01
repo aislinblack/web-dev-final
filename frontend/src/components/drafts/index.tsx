@@ -26,7 +26,6 @@ const Drafts = ({ authorId }: { authorId: string }) => {
   const like = async (draftId: string) => {
     if (userInfo.loggedIn) {
       likeDraft(draftId).then((res) => {
-        console.log(res);
         const newDrafts = drafts.map((draft) => {
           return draft._id === draftId
             ? { ...draft, likes: [...draft.likes, userInfo.user._id] }

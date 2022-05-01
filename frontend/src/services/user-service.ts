@@ -24,6 +24,12 @@ export const login = (args: { email: string; password: string }) => {
     });
 };
 
+export const logout = () => {
+  return axios
+    .post(`${API_BASE}/api/users/logout`, {}, { withCredentials: true })
+    .then(() => {});
+};
+
 export const findUserById = (id: string) => {
   return axios.get(`${API_BASE}/api/users/${id}`).then((response) => {
     return response.data;

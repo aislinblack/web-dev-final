@@ -8,14 +8,16 @@ export type CriticProfile = {
   };
 } & GeneralAttributes;
 
-type AuthorProfile = {
+export type AuthorProfile = {
   role: 'author';
   authorProfile: { inspirations: string[] };
 } & GeneralAttributes;
 
 type ReaderProfile = {
   role: 'reader';
-  readerProfile: {};
+  readerProfile: {
+    favoriteAuthor?: string;
+  };
 } & GeneralAttributes;
 
 type GeneralAttributes = {

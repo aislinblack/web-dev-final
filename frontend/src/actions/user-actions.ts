@@ -1,10 +1,12 @@
 import { UserInfo } from 'os';
 import { stringify } from 'querystring';
+import { NavigateFunction } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { AppDispatch } from '../App';
 import {
   findLoggedInUser,
   login,
+  logout,
   signup,
   updateUser,
 } from '../services/user-service';
@@ -14,12 +16,14 @@ export const SIGN_IN = 'SIGN_IN';
 export const REFRESHING = 'REFRESHING';
 export const NOT_REFRESHING = 'NOT_REFRESHING';
 export const UPDATE_USER = 'UPDATE_USER';
+export const LOG_OUT = 'LOG_OUT';
 
 export type UserActions =
   | { type: 'SIGN_IN'; user: User }
   | { type: 'REFRESHING' }
   | { type: 'NOT_REFRESHING' }
-  | { type: 'UPDATE_USER'; user: User };
+  | { type: 'UPDATE_USER'; user: User }
+  | { type: 'LOG_OUT' };
 
 export const signIn = async (
   dispatch: Dispatch,
@@ -101,4 +105,34 @@ export const updateAuthor = async (
   };
   await updateUser(updated);
   dispatch({ type: UPDATE_USER, user: updated });
+};
+
+export const updateReader = async (
+  dispatch: AppDispatch,
+  user: User,
+  {
+    firstName,
+    lastName,
+    favoriteAuthor,
+  }: { firstName: string; lastName: string; favoriteAuthor?: string }
+) => {
+  if (user.role !== 'reader') {
+    return console.error('Cannot update non reader');
+  }
+
+  const updated: User = {
+    ...user,
+    firstName,
+    lastName,
+    readerProfile: { favoriteAuthor },
+  };
+
+  await updateUser(updated);
+  dispatch({ type: UPDATE_USER, user: updated });
+};
+
+export const logoutUser = async (dispatch: AppDispatch) => {
+  await logout();
+
+  dispatch({ type: 'LOG_OUT' });
 };

@@ -33,7 +33,6 @@ const Reviews = ({
 
   useEffect(() => {
     if (userInfo.loggedIn && userInfo.user.role === 'critic') {
-      console.log(userInfo.user.criticProfile.organization);
       getCriticsByOrganization(userInfo.user.criticProfile.organization).then(
         (res) => {
           setColleagues(res);

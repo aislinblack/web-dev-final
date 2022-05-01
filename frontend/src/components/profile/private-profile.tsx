@@ -1,12 +1,37 @@
 import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../actions/user-actions';
 import { getMeerkatByFirstName } from '../../data/meerkats';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorById } from '../../services/author-service';
+import { logout } from '../../services/user-service';
 import Drafts from '../drafts';
 
 const PrivateProfile = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [favoriteAuthor, setFavoriteAuthor] = useState('None');
+
+  useEffect(() => {
+    if (!userInfo.loggedIn && !userInfo.refreshing) {
+      navigate('/home');
+    }
+  }, [userInfo, navigate]);
+
+  useEffect(() => {
+    if (
+      userInfo.loggedIn &&
+      userInfo.user.role === 'reader' &&
+      userInfo.user.readerProfile.favoriteAuthor
+    ) {
+      getAuthorById(userInfo.user.readerProfile.favoriteAuthor).then((res) =>
+        setFavoriteAuthor(`${res.firstName} ${res.lastName}`)
+      );
+    }
+  }, [userInfo]);
 
   if (!userInfo.loggedIn) {
     return <></>;
@@ -51,11 +76,27 @@ const PrivateProfile = () => {
               : userInfo.user.authorProfile.inspirations.join(', ')}
           </div>
         )}
+        {userInfo.user.role === 'reader' && (
+          <div>
+            Favorite Author: {favoriteAuthor}{' '}
+            <Link to={`/profile/${userInfo.user.readerProfile.favoriteAuthor}`}>
+              <i className='fas fa-hand-point-right ms-1 fa-lg'></i>
+            </Link>
+          </div>
+        )}
         <button
           className='btn btn-primary rounded-pill mt-2'
           onClick={() => navigate('/edit-profile')}
         >
           Edit
+        </button>
+        <button
+          className='btn btn-danger rounded-pill mt-2'
+          onClick={() => {
+            logoutUser(dispatch);
+          }}
+        >
+          Logout
         </button>
         {userInfo.user.role === 'author' && (
           <Drafts authorId={userInfo.user._id} />

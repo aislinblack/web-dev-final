@@ -12,7 +12,6 @@ const PostPoem = () => {
       throw new Error('something went wrong :(');
     }
     postPoemForAuthor(userInfo.user._id, newTitle, newPoem).then((res) => {
-      console.log(res);
       setTitle('');
       setPoem('');
     });

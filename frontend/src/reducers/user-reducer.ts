@@ -4,6 +4,7 @@ import {
   REFRESHING,
   NOT_REFRESHING,
   UPDATE_USER,
+  LOG_OUT,
 } from '../actions/user-actions';
 import { User } from '../types/user';
 
@@ -23,6 +24,8 @@ const userReducer = (
     case REFRESHING:
       return { loggedIn: false, refreshing: true };
     case NOT_REFRESHING:
+      return { loggedIn: false, refreshing: false };
+    case LOG_OUT:
       return { loggedIn: false, refreshing: false };
     default:
       return state;

@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { updateAuthor, updateCritic } from '../../actions/user-actions';
+import {
+  updateAuthor,
+  updateCritic,
+  updateReader,
+} from '../../actions/user-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthors } from '../../services/author-service';
+import { AuthorProfile } from '../../types/user';
 
 const EditProfile = () => {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.userInfo);
   const navigate = useNavigate();
+  const [authors, setAuthors] = useState<AuthorProfile[]>([]);
+
+  useEffect(() => {
+    getAuthors().then((res) => setAuthors(res));
+  }, []);
 
   const [newFirstName, setFirstName] = useState(
     (userInfo.loggedIn && userInfo.user.firstName) || ''
@@ -26,6 +37,13 @@ const EditProfile = () => {
       userInfo.user.role === 'author' &&
       userInfo.user.authorProfile.inspirations) ||
       []
+  );
+
+  const [newFavAuthor, setFavAuthor] = useState(
+    (userInfo.loggedIn &&
+      userInfo.user.role === 'reader' &&
+      userInfo.user.readerProfile.favoriteAuthor) ||
+      undefined
   );
 
   useEffect(() => {
@@ -58,6 +76,12 @@ const EditProfile = () => {
         lastName: newLastName,
         inspirations,
       }).then(() => navigate('/profile'));
+    } else if (userInfo.loggedIn && userInfo.user.role === 'reader') {
+      updateReader(dispatch, userInfo.user, {
+        firstName: newFirstName,
+        lastName: newLastName,
+        favoriteAuthor: newFavAuthor,
+      }).then(() => navigate('/profile'));
     }
   };
 
@@ -81,6 +105,25 @@ const EditProfile = () => {
         />
         <label htmlFor='lastName'>Last Name</label>
       </form>
+      {userInfo.loggedIn && userInfo.user.role === 'reader' && (
+        <form className='form-floating mb-2'>
+          <select
+            id='favAuthor'
+            className='form-control'
+            value={newFavAuthor}
+            placeholder='Emily Dickinson'
+            onChange={(event) => setFavAuthor(event.target.value)}
+          >
+            <option disabled selected value={undefined}></option>
+            {authors.map((author) => (
+              <option key={author._id} value={author._id}>
+                {author.firstName} {author.lastName}
+              </option>
+            ))}
+          </select>
+          <label htmlFor='favAuthor'>Favorite Author</label>
+        </form>
+      )}
       {userInfo.loggedIn && userInfo.user.role === 'critic' && (
         <form className='form-floating mb-2'>
           <input

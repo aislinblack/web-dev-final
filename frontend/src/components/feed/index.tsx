@@ -45,7 +45,6 @@ const Feed = () => {
         return null;
       })
     ).then((data) => {
-      console.log(data.filter((entry) => entry));
       const reduceMaybe = data.reduce(
         (previousValue, currentValue) =>
           currentValue ? [...currentValue, ...previousValue] : previousValue,
@@ -68,7 +67,6 @@ const Feed = () => {
         return null;
       })
     ).then((data) => {
-      console.log(data.filter((entry) => entry));
       const reduceMaybe = data.reduce(
         (previousValue, currentValue) =>
           currentValue ? [...currentValue, ...previousValue] : previousValue,

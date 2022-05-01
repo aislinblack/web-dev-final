@@ -8,7 +8,6 @@ const Following = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
 
   const [following, setFollowing] = useState<User[]>([]);
-  console.log(userInfo);
 
   useEffect(() => {
     if (userInfo.loggedIn) {

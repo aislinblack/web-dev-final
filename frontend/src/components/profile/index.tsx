@@ -13,12 +13,6 @@ const Profile = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!userId && !userInfo.loggedIn && !userInfo.refreshing) {
-      navigate('/uh-oh');
-    }
-  }, [userInfo, userId, navigate]);
-
   return !userId ? <PrivateProfile /> : <PublicProfile userId={userId} />;
 };
 

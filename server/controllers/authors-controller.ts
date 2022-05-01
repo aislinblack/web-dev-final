@@ -29,7 +29,21 @@ const getAllDrafts = async (req, res) => {
   res.send(draftsWithAuthor);
 };
 
+const getAllAuthors = async (req, res) => {
+  const authors = await usersDao.findUsersByRole('author');
+
+  res.send(authors);
+};
+
+const getAuthorById = async (req, res) => {
+  const author = await usersDao.findUserById(req.params.aid);
+
+  res.send(author);
+};
+
 export default (app) => {
+  app.get('/api/authors', getAllAuthors);
+  app.get('/api/authors/:aid', getAuthorById);
   app.post('/api/authors/:aid/drafts', postDraft);
   app.get('/api/authors/:aid/drafts', getAllDrafts);
 };

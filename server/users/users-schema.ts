@@ -16,7 +16,16 @@ const usersSchema = new mongoose.Schema(
       required: false,
       type: { organization: { type: String, default: 'Self-Employed' } },
     },
-    readerProfile: { required: false },
+    readerProfile: {
+      required: false,
+      type: {
+        favoriteAuthor: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'UsersModel',
+          required: false,
+        },
+      },
+    },
     followers: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UsersModel' }],
       default: [],

@@ -86,7 +86,7 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  req.session.destroy();
+  req.session.profile = undefined;
   res.sendStatus(200);
 };
 
