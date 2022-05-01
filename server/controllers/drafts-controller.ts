@@ -1,11 +1,10 @@
 import draftDao from '../drafts/draft-dao';
-import usersDao from '../users/users-dao';
 
 const likeDraft = async (req, res) => {
-  const pid = req.params.pid;
+  const draftId = req.params.draftId;
   const userId = req.query.userId || req.session.profile._id;
 
-  const update = await draftDao.likeDraft(pid, userId);
+  const update = await draftDao.likeDraft(draftId, userId);
 
   res.send(update);
 };
