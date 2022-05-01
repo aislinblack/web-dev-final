@@ -11,7 +11,7 @@ const PostPoem = () => {
     if (!userInfo.loggedIn) {
       throw new Error('something went wrong :(');
     }
-    postPoemForAuthor(userInfo.user._id, newTitle, newPoem).then((res) => {
+    postPoemForAuthor(userInfo.user._id, newPoem, newTitle).then((res) => {
       setTitle('');
       setPoem('');
     });

@@ -30,7 +30,7 @@ const Post = ({ post }: { post: PostType }) => {
             <h6>By {post.authorName}</h6>
           </div>
           <div>
-            <div>{post.text}</div>
+            <pre>{post.text}</pre>
           </div>
           <span onClick={() => !liked && like(post._id)}>
             <i

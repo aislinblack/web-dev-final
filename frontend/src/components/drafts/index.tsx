@@ -49,7 +49,7 @@ const Drafts = ({ authorId }: { authorId: string }) => {
         return (
           <div key={draft._id} className='mb-5 border rounded text-left p-2'>
             <h5>{draft.title}</h5>
-            <div>{draft.text}</div>
+            <span style={{ whiteSpace: 'pre-line' }}>{draft.text}</span>
             <span onClick={() => canUserLikeDraft && like(draft._id)}>
               <i
                 className='fa fa-solid fa-heart me-1'
