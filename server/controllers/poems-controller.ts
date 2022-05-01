@@ -153,9 +153,7 @@ const getMostPopularPoems = async (req, res) => {
 const likePoem = async (req, res) => {
   const pid = req.params.pid;
   const userId = req.query.userId || req.session.profile._id;
-  console.log(userId);
   const lookupUser = await usersDao.findUserById(userId).exec();
-  console.log(lookupUser);
 
   const update = await poemsDao.likePoem(pid, lookupUser._id);
 
@@ -169,6 +167,16 @@ const getPoem = async (req, res) => {
   res.send(poem);
 };
 
+const getLikedPoems = async (req, res) => {
+  const user = req.session.profile;
+  if (!user) {
+    res.sendStatus(403);
+  }
+
+  const poems = await poemsDao.findPoemsLikedByUser(user._id);
+  res.send(poems);
+};
+
 export default (app) => {
   app.get('/api/authors', getAuthors);
   app.get('/api/poems', searchForPoems);
@@ -178,5 +186,6 @@ export default (app) => {
   app.put('/api/poems/:pid/comment', createComment);
   app.get('/api/poems/popular', getMostPopularPoems);
   app.put('/api/poems/:pid/like', likePoem);
+  app.get('/api/poems/liked', getLikedPoems);
   app.get('/api/poems/:pid', getPoem);
 };

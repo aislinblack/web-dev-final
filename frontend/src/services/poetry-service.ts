@@ -59,6 +59,10 @@ export const commentOnPoem = (pid: string, comment: string) => {
     });
 };
 
+export const getLikedPoems = () => {
+  return instance.get('liked').then((res) => res.data);
+};
+
 export const likepoem = (pid: string) => {
   return instance
     .put(`${pid}/like`, {}, { withCredentials: true })

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorById } from '../../services/author-service';
 import { logout } from '../../services/user-service';
 import Drafts from '../drafts';
+import LikedPoems from './liked-poems';
 
 const PrivateProfile = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
@@ -85,13 +86,13 @@ const PrivateProfile = () => {
           </div>
         )}
         <button
-          className='btn btn-primary rounded-pill mt-2'
+          className='btn btn-primary rounded-pill mt-2 me-1'
           onClick={() => navigate('/edit-profile')}
         >
           Edit
         </button>
         <button
-          className='btn btn-danger rounded-pill mt-2'
+          className='btn btn-danger rounded-pill mt-2 ms-1'
           onClick={() => {
             logoutUser(dispatch);
           }}
@@ -101,6 +102,7 @@ const PrivateProfile = () => {
         {userInfo.user.role === 'author' && (
           <Drafts authorId={userInfo.user._id} />
         )}
+        <LikedPoems />
       </div>
     </div>
   );

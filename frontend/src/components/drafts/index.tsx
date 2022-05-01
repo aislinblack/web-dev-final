@@ -47,7 +47,7 @@ const Drafts = ({ authorId }: { authorId: string }) => {
         const didUserLikeDraft =
           userInfo.loggedIn && draft.likes.includes(userInfo.user._id);
         return (
-          <div key={draft._id} className='mb-5 border rounded text-left'>
+          <div key={draft._id} className='mb-5 border rounded text-left p-2'>
             <h5>{draft.title}</h5>
             <div>{draft.text}</div>
             <span onClick={() => canUserLikeDraft && like(draft._id)}>

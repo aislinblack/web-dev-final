@@ -32,8 +32,14 @@ const RandomPoems = () => {
             <div key={poem._id} className='row'>
               <div className='col'>{poem.author}</div>
               <div className='col'>{poem.title}</div>
-              <div className='col'>{poem.likes.length}</div>
-              <div className='col'>{calculateAverageRating(poem.ratings)}</div>
+              <div className='col'>
+                <i className='fas fa-heart me-1'></i>
+                {poem.likes.length}
+              </div>
+              <div className='col'>
+                <i className='fas fa-star me-1'></i>
+                {calculateAverageRating(poem.ratings)}
+              </div>
               <div className='col'>
                 <Link
                   to={`/poem/${encodeURIComponent(

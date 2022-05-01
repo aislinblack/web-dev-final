@@ -66,16 +66,23 @@ export const updateCritic = async (
   {
     firstName,
     lastName,
+    password,
     organization,
-  }: { firstName: string; lastName: string; organization: string }
+  }: {
+    firstName: string;
+    lastName: string;
+    password?: string;
+    organization: string;
+  }
 ) => {
   if (user.role !== 'critic') {
     return console.error('Cannot update non critic');
   }
-  const updated: User = {
+  const updated: User & { password?: string } = {
     ...user,
     firstName,
     lastName,
+    password,
     criticProfile: { organization },
   };
 
@@ -90,17 +97,24 @@ export const updateAuthor = async (
   {
     firstName,
     lastName,
+    password,
     inspirations,
-  }: { firstName: string; lastName: string; inspirations: string[] }
+  }: {
+    firstName: string;
+    lastName: string;
+    password?: string;
+    inspirations: string[];
+  }
 ) => {
   if (user.role !== 'author') {
     return console.error('Cannot update non author');
   }
 
-  const updated: User = {
+  const updated: User & { password?: string } = {
     ...user,
     firstName,
     lastName,
+    password,
     authorProfile: { inspirations },
   };
   await updateUser(updated);
@@ -113,17 +127,24 @@ export const updateReader = async (
   {
     firstName,
     lastName,
+    password,
     favoriteAuthor,
-  }: { firstName: string; lastName: string; favoriteAuthor?: string }
+  }: {
+    firstName: string;
+    lastName: string;
+    password?: string;
+    favoriteAuthor?: string;
+  }
 ) => {
   if (user.role !== 'reader') {
     return console.error('Cannot update non reader');
   }
 
-  const updated: User = {
+  const updated: User & { password?: string } = {
     ...user,
     firstName,
     lastName,
+    password,
     readerProfile: { favoriteAuthor },
   };
 

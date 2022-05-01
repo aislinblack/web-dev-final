@@ -25,6 +25,7 @@ const EditProfile = () => {
   const [newLastName, setLastName] = useState(
     (userInfo.loggedIn && userInfo.user.lastName) || ''
   );
+  const [newPassword, setPassword] = useState<string | undefined>(undefined);
   const [newAffiliation, setAffiliation] = useState(
     (userInfo.loggedIn &&
       userInfo.user.role === 'critic' &&
@@ -38,7 +39,6 @@ const EditProfile = () => {
       userInfo.user.authorProfile.inspirations) ||
       []
   );
-
   const [newFavAuthor, setFavAuthor] = useState(
     (userInfo.loggedIn &&
       userInfo.user.role === 'reader' &&
@@ -68,18 +68,21 @@ const EditProfile = () => {
       updateCritic(dispatch, userInfo.user, {
         firstName: newFirstName,
         lastName: newLastName,
+        password: newPassword,
         organization: newAffiliation,
       }).then(() => navigate('/profile'));
     } else if (userInfo.loggedIn && userInfo.user.role === 'author') {
       updateAuthor(dispatch, userInfo.user, {
         firstName: newFirstName,
         lastName: newLastName,
+        password: newPassword,
         inspirations,
       }).then(() => navigate('/profile'));
     } else if (userInfo.loggedIn && userInfo.user.role === 'reader') {
       updateReader(dispatch, userInfo.user, {
         firstName: newFirstName,
         lastName: newLastName,
+        password: newPassword,
         favoriteAuthor: newFavAuthor,
       }).then(() => navigate('/profile'));
     }
@@ -179,7 +182,7 @@ const EditProfile = () => {
             </div>
             <div className='col'>
               <button
-                className='btn btn-info'
+                className='btn btn-info rounded-pill'
                 onClick={() => {
                   setInspirations([...inspirations, newInspo]);
                   setNewInspo('');
@@ -191,8 +194,27 @@ const EditProfile = () => {
           </div>
         </div>
       )}
-      <button className='mt-2 btn btn-primary' onClick={saveProfile}>
+      <form className='form-floating mt-3 mb-2'>
+        <input
+          id='password'
+          type='password'
+          className='form-control'
+          value={newPassword}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <label htmlFor='password'>Password</label>
+      </form>
+      <button
+        className='mt-2 btn btn-primary rounded-pill me-1'
+        onClick={saveProfile}
+      >
         Save Profile
+      </button>
+      <button
+        className='mt-2 btn btn-danger rounded-pill ms-1'
+        onClick={() => navigate('/profile')}
+      >
+        Cancel
       </button>
     </div>
   );
