@@ -8,6 +8,7 @@ import { findUserById } from '../../services/user-service';
 
 import { User } from '../../types/user';
 import Drafts from '../drafts';
+import ReviewsByCritic from './reviews';
 
 const PublicProfile = ({ userId }: { userId: string }) => {
   const [user, setUser] = useState<null | User>(null);
@@ -67,6 +68,7 @@ const PublicProfile = ({ userId }: { userId: string }) => {
           </div>
         )}
         {user.role === 'author' && <Drafts authorId={user._id} />}
+        {user.role === 'critic' && <ReviewsByCritic criticId={user._id} />}
         {user.role === 'reader' && (
           <div>
             Favorite Author: {favoriteAuthor}{' '}

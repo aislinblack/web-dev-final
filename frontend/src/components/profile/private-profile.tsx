@@ -9,6 +9,7 @@ import { getAuthorById } from '../../services/author-service';
 import { logout } from '../../services/user-service';
 import Drafts from '../drafts';
 import LikedPoems from './liked-poems';
+import ReviewsByCritic from './reviews';
 
 const PrivateProfile = () => {
   const userInfo = useAppSelector((state) => state.userInfo);
@@ -101,6 +102,9 @@ const PrivateProfile = () => {
         </button>
         {userInfo.user.role === 'author' && (
           <Drafts authorId={userInfo.user._id} />
+        )}
+        {userInfo.user.role === 'critic' && (
+          <ReviewsByCritic criticId={userInfo.user._id} />
         )}
         <LikedPoems />
       </div>
