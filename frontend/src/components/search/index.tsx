@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { findPoems } from '../../services/poetry-service';
-import { Link } from 'react-router-dom';
+import { Link, ParamKeyValuePair, useSearchParams } from 'react-router-dom';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -8,10 +8,25 @@ const Search = () => {
     []
   );
 
-  const searchForPoems = (title: string, author: string) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    console.log(searchParams);
+    const title = searchParams.get('title') || '';
+    const author = searchParams.get('author') || '';
     findPoems(title, author).then((data: any) => {
       setSearchResults(data.data);
     });
+  }, [searchParams]);
+
+  const searchForPoems = (title: string, author: string) => {
+    const search: ParamKeyValuePair[] =
+      title !== '' ? [['title', title]] : [['author', author]];
+    setSearchParams(search);
+    // findPoems(title, author).then((data: any) => {
+
+    //   setSearchResults(data.data);
+    // });
   };
 
   return (
