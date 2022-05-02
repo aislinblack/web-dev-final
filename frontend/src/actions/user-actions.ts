@@ -29,7 +29,13 @@ export const signIn = async (
   dispatch: Dispatch,
   args: { email: string; password: string }
 ) => {
-  const result = await login(args);
+  const result = await login(args).then((res) => {
+    if (res.status === 403) {
+      throw new Error("User Info didn't match :(");
+    }
+    return res;
+  });
+
   dispatch({ type: SIGN_IN, user: result.user });
   return result.user;
 };

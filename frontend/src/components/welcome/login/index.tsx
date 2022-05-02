@@ -13,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((store) => store.userInfo);
+  const [error, setError] = useState<undefined | string>(undefined);
 
   useEffect(() => {
     if (userInfo.loggedIn) {
@@ -22,14 +23,21 @@ const Login = () => {
 
   const logIn = () => {
     setLoading(true);
-    signIn(dispatch, { email, password }).then((result) => {
-      if (result.loggedIn) {
-        navigate('/home');
-      }
-      setEmail('');
-      setPassword('');
-      setLoading(false);
-    });
+    setError(undefined);
+    signIn(dispatch, { email, password })
+      .then((result) => {
+        if (result.loggedIn) {
+          navigate('/home');
+        }
+      })
+      .catch((error: Error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setEmail('');
+        setPassword('');
+        setLoading(false);
+      });
   };
 
   return (
@@ -61,6 +69,11 @@ const Login = () => {
       >
         {loading ? <i className='fas fa-spinner fa-pulse fa-3x' /> : 'Login'}
       </button>
+      {error && (
+        <div className='text-danger mt-2'>
+          <b>{error}</b>
+        </div>
+      )}
     </div>
   );
 };
