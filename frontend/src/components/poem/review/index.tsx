@@ -46,6 +46,7 @@ const Reviews = ({
       <div>
         {userInfo.loggedIn && userInfo.user.role === 'critic' && (
           <ReviewForm
+            criticId={userInfo.user._id}
             poemId={poemId}
             onSubmit={submitReview}
             colleagues={colleagues}

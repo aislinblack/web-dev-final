@@ -1,3 +1,4 @@
+import { userInfo } from 'os';
 import { useState } from 'react';
 import { postReview } from '../../../services/review-service';
 import { CriticProfile } from '../../../types/user';
@@ -6,8 +7,10 @@ const ReviewForm = ({
   poemId,
   onSubmit,
   colleagues,
+  criticId,
 }: {
   poemId: string;
+  criticId: string;
   onSubmit: (
     reviewBody: string,
     rating: number,
@@ -52,9 +55,11 @@ const ReviewForm = ({
               onChange={(event) => setCollaborator(event.target.value)}
             >
               <option value={collaborator}>None</option>
-              {colleagues.map((colleague) => (
-                <option value={colleague._id}>{colleague.fullName}</option>
-              ))}
+              {colleagues
+                .filter((colleague) => colleague._id !== criticId)
+                .map((colleague) => (
+                  <option value={colleague._id}>{colleague.fullName}</option>
+                ))}
             </select>
 
             <label htmlFor='collaborator'>Collaborator</label>
