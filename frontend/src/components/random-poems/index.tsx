@@ -25,7 +25,9 @@ const RandomPoems = () => {
 
   return (
     <div>
-      <h3>5 Random Poems Today</h3>
+      <h3>
+        Poems of the Day <i className='fas fa-dice'></i>
+      </h3>
       <ul>
         {poems.map((poem) => {
           return (

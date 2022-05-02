@@ -15,7 +15,9 @@ const Recommendations = ({ userId }: { userId: string }) => {
 
   return (
     <div>
-      <h3>You might like:</h3>
+      <h3>
+        You might like <i className='fas fa-grin-hearts'></i>
+      </h3>
       <ul className='list-group'>
         {recs.map((rec) => {
           return (

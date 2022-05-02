@@ -50,7 +50,16 @@ const PrivateProfile = () => {
         <h3>
           {userInfo.user.firstName} {userInfo.user.lastName}
         </h3>
-        <div className='text-muted'>{userInfo.user.role}</div>
+        <div className='text-muted'>
+          {userInfo.user.role}{' '}
+          {userInfo.user.role === 'reader' ? (
+            <i className='fas fa-book-reader'></i>
+          ) : userInfo.user.role === 'author' ? (
+            <i className='fas fa-feather-alt'></i>
+          ) : (
+            <i className='fas fa-gavel'></i>
+          )}
+        </div>
         {userInfo.user.role === 'critic' && (
           <div>Affiliation: {userInfo.user.criticProfile.organization}</div>
         )}

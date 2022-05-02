@@ -11,12 +11,14 @@ const Home = () => {
   return (
     <div className='row'>
       <div className='col'>
-        <h1>Poetry of our Own</h1>
+        <h1>
+          Poetry of our Own <i className='fas fa-toilet ms-1'></i>
+        </h1>
         <RandomPoems />
         {userInfo.loggedIn && <Recommendations userId={userInfo.user._id} />}
         <div>
           <h3 className='mt-2'>
-            Find a poem?
+            Find a poem <i className='fas fa-search'></i>
             <button
               className='btn btn-primary rounded-pill btn-lg ms-2'
               onClick={() => navigate('search')}

@@ -23,14 +23,13 @@ const Search = () => {
     const search: ParamKeyValuePair[] =
       title !== '' ? [['title', title]] : [['author', author]];
     setSearchParams(search);
-    // findPoems(title, author).then((data: any) => {
-
-    //   setSearchResults(data.data);
-    // });
   };
 
   return (
     <div>
+      <h1>
+        Find a Poem <i className='fas fa-book'></i>
+      </h1>
       <input
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}

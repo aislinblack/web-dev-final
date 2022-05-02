@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { UPDATE_USER } from '../../actions/user-actions';
 import { getMeerkatByFirstName } from '../../data/meerkats';
 import { useAppDispatch } from '../../hooks';
@@ -61,7 +62,9 @@ const WhoToFollowList = ({ userId }: { userId: string }) => {
                 alt=''
               />
               <div>
-                {who.firstName} {who.lastName}
+                <Link to={`/profile/${who._id}`}>
+                  {who.firstName} {who.lastName}
+                </Link>
                 <div className='text-muted'>{who.role}</div>
               </div>
               <div className='col'>

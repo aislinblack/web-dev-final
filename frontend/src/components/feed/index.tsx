@@ -106,7 +106,9 @@ const Feed = () => {
 
   return (
     <div>
-      <h3>Your Poetry Feed</h3>
+      <h1 className='ms-3'>
+        Your Poetry Feed <i className='fas fa-utensils'></i>
+      </h1>
       {sortedByDate.map((post) => (
         <Post key={post._id} post={post} />
       ))}

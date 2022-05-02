@@ -49,7 +49,16 @@ const PublicProfile = ({ userId }: { userId: string }) => {
         <h3>
           {user.firstName} {user.lastName}
         </h3>
-        <div className='text-muted'>{user.role}</div>
+        <div className='text-muted'>
+          {user.role}{' '}
+          {user.role === 'reader' ? (
+            <i className='fas fa-book-reader'></i>
+          ) : user.role === 'author' ? (
+            <i className='fas fa-feather-alt'></i>
+          ) : (
+            <i className='fas fa-gavel'></i>
+          )}
+        </div>
         {user.dateJoined && (
           <div className='text-muted'>{`User since ${format(
             new Date(user.dateJoined),
