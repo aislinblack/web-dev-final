@@ -9,3 +9,34 @@
   width: 50px;
   height: 50px;
 }
+
+.wd-color-gray {
+  color: rgb(116, 124, 130);
+}
+
+.wd-color-red {
+  color: rgb(232, 36, 92);
+}
+
+.wd-profile-pic {
+  border-radius: 24px;
+  float: left;
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.wd-full-width {
+  width: 100%;
+}
+
+.wd-whats-happening-text {
+  width: 100%;
+  color: white;
+  background-color: black;
+}
+
+.wd-home-tuit-attachment {
+  width: 100%;
+  border-radius: 20px;
+}

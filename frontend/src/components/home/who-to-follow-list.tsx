@@ -51,39 +51,29 @@ const WhoToFollowList = ({ userId }: { userId: string }) => {
 
   return (
     <div className='list-group'>
-      {followList.map((follow) => {
+      {followList.map((who) => {
         return (
-          <li key={follow._id} className='list-group-item'>
-            <div className='row me-1'>
-              <div className='col-2'>
-                <img
-                  className='wd-avatar'
-                  src={getMeerkatByFirstName(follow.email)}
-                  alt=''
-                />
+          <>
+            <li className='list-group-item wd-follow-container d-flex'>
+              <img
+                className='wd-profile-pic position-relative me-2'
+                src={getMeerkatByFirstName(who.firstName)}
+                alt=''
+              />
+              <div>
+                {who.firstName} {who.lastName}
+                <div className='text-muted'>{who.role}</div>
               </div>
-              <div className='col-7'>
-                <p className='fw-bold mb-0'>
-                  {follow.firstName} {follow.lastName}
-                  <i className='fa fa-certificate'></i>
-                </p>
-                <p className='text-muted mt-0 mb-0'>{follow.role}</p>
-              </div>
-              <div className='col-3'>
+              <div className='col'>
                 <button
-                  disabled={follow.followed}
-                  className='btn btn-primary fw-bold wd-follow-button mt-1'
-                  onClick={() => clickFollow(follow._id)}
+                  type='submit'
+                  className='btn btn-primary fa-pull-right rounded-pill pt-1 pb-1'
                 >
-                  {follow.followed ? (
-                    <i className='fa fa-solid fa-check-double'></i>
-                  ) : (
-                    'Follow'
-                  )}
+                  Follow
                 </button>
               </div>
-            </div>
-          </li>
+            </li>
+          </>
         );
       })}
     </div>
