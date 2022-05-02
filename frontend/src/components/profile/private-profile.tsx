@@ -60,6 +60,7 @@ const PrivateProfile = () => {
             <i className='fas fa-gavel'></i>
           )}
         </div>
+        <div>Email: {userInfo.user.email}</div>
         {userInfo.user.role === 'critic' && (
           <div>Affiliation: {userInfo.user.criticProfile.organization}</div>
         )}
