@@ -97,17 +97,15 @@ const findPoem = async (req, res) => {
   ).exec();
 
   if (!alsoMaybePoem) {
-    createPoem({
+    const newPoem = await createPoem({
       title: maybePoem.title,
       author: maybePoem.author,
       likes: [],
       comments: [],
       ratings: [],
-    }).then((res) => {
-      return res;
     });
 
-    res.send({ ...maybePoem, comments: [], rating: [], likes: 0 });
+    res.send({ ...newPoem._doc, lines: maybePoem.lines });
     return;
   }
 

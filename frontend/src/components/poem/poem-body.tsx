@@ -20,6 +20,9 @@ const PoemBody = ({
   const didUserLikePoem =
     userInfo.loggedIn && (poem.likes.includes(userInfo.user._id) || liked);
 
+  const iShouldAddToLikes =
+    userInfo.loggedIn && !poem.likes.includes(userInfo.user._id) && liked;
+
   const likePoem = () => {
     if (userInfo.loggedIn && !didUserLikePoem) {
       likepoem(poem._id).then((res) => {
@@ -43,7 +46,7 @@ const PoemBody = ({
             style={{ color: didUserLikePoem ? 'red' : 'light-grey' }}
             onClick={() => likePoem()}
           ></i>{' '}
-          {poem.likes.length + (liked ? 1 : 0)}
+          {poem.likes.length + (iShouldAddToLikes ? 1 : 0)}
         </div>
         <div className='col'>
           <i className='fa fa-solid fa-star me-1' style={{ color: 'gold' }}></i>
